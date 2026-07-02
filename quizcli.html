@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Completo de Comandos Linux</title>
+
+<style>
+:root{
+    --bg:#0f172a;
+    --card:#1e293b;
+    --card2:#334155;
+    --primary:#38bdf8;
+    --text:#f8fafc;
+    --muted:#cbd5e1;
+    --code:#111827;
+    --success:#22c55e;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Segoe UI,Roboto,Arial,sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:var(--text);
+    line-height:1.6;
+}
+
+header{
+    padding:35px 20px;
+    text-align:center;
+    background:#020617;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 3px 10px rgba(0,0,0,.3);
+}
+
+h1{
+    color:var(--primary);
+    margin-bottom:10px;
+}
+
+header p{
+    color:var(--muted);
+}
+
+.container{
+    width:min(1300px,95%);
+    margin:auto;
+    padding:25px 0 60px;
+}
+
+.search{
+    margin:25px 0;
+    display:flex;
+}
+
+.search input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    background:#1e293b;
+    color:white;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    gap:20px;
+}
+
+section{
+    background:var(--card);
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+}
+
+section h2{
+    margin-bottom:18px;
+    color:var(--primary);
+    border-bottom:2px solid var(--primary);
+    padding-bottom:8px;
+}
+
+.command{
+    background:var(--card2);
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:15px;
+    transition:.25s;
+}
+
+.command:hover{
+    transform:translateY(-2px);
+}
+
+.command h3{
+    color:#7dd3fc;
+    margin-bottom:8px;
+}
+
+.command p{
+    margin:5px 0;
+    color:#e2e8f0;
+}
+
+pre{
+    background:var(--code);
+    color:#22c55e;
+    padding:12px;
+    border-radius:8px;
+    overflow:auto;
+    margin:10px 0;
+}
+
+button{
+    margin-top:8px;
+    background:var(--primary);
+    border:none;
+    color:#000;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    filter:brightness(1.1);
+}
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:var(--success);
+    color:#fff;
+    padding:12px 18px;
+    border-radius:8px;
+    opacity:0;
+    transition:.4s;
+}
+
+.toast.show{
+    opacity:1;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#94a3b8;
+}
+
+@media(max-width:700px){
+
+header{
+    position:relative;
+}
+
+.grid{
+    grid-template-columns:1fr;
+}
+
+h1{
+    font-size:1.8rem;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🐧 Guia Completo de Comandos Linux</h1>
+<p>Guia rápido com os comandos essenciais do terminal Linux.</p>
+</header>
+
+<div class="container">
+
+<div class="search">
+<input id="search" placeholder="Pesquisar comando...">
+</div>
+
+<div class="grid" id="content"></div>
+
+</div>
+
+<div class="toast" id="toast">Comando copiado!</div>
+
+<footer>
+Criado em uma única página HTML • CSS e JavaScript incorporados.
+</footer>
+
+<script>
+
+const dados=[
+{
+titulo:"📁 Bloco 1: Navegação e Informações Básicas",
+itens:[
+["pwd","Mostra o caminho completo do diretório atual.","pwd","Ideal para saber onde você está antes de criar ou mover arquivos."],
+["ls","Lista arquivos e diretórios.","ls -la","Use -l para detalhes e -a para mostrar arquivos ocultos."],
+["cd","Navega entre diretórios.","cd /var/log","Use cd .. para voltar e cd ~ para ir para a Home."],
+["mkdir","Cria novos diretórios.","mkdir projetos","Use -p para criar estruturas completas."],
+["history","Mostra o histórico de comandos.","history","Excelente para recuperar comandos antigos."]
+]
+},
+{
+titulo:"📄 Bloco 2: Gerenciamento de Arquivos",
+itens:[
+["touch","Cria arquivo vazio.","touch arquivo.txt","Forma rápida de criar arquivos."],
+["cat","Mostra o conteúdo de arquivos.","cat arquivo.txt","Ideal para arquivos pequenos."],
+["nano","Editor de texto simples.","nano arquivo.txt","Salvar: Ctrl+O • Sair: Ctrl+X."],
+["cp","Copia arquivos ou diretórios.","cp arquivo.txt backup/","Use -r para copiar pastas."],
+["mv","Move ou renomeia arquivos.","mv arquivo.txt documento.txt","Também serve para mover arquivos."]
+]
+},
+{
+titulo:"🗑️ Bloco 3: Manutenção e Limpeza",
+itens:[
+["rm","Remove arquivos permanentemente.","rm arquivo.txt","Use rm -rf com extremo cuidado."],
+["rmdir","Remove diretórios vazios.","rmdir pasta_vazia","Não funciona se houver arquivos."],
+["find","Localiza arquivos e pastas.","find /home -name '*.txt'","Excelente para encontrar arquivos perdidos."],
+["grep","Busca textos dentro de arquivos.","grep 'erro' log.txt","Muito usado para analisar logs."],
+["echo","Exibe ou grava texto.","echo 'Olá Mundo' > ola.txt","Também usado em scripts."]
+]
+},
+{
+titulo:"💻 Bloco 4: Monitoramento do Sistema",
+itens:[
+["df","Mostra espaço em disco.","df -h","Use -h para tamanhos legíveis."],
+["du","Mostra tamanho de arquivos e pastas.","du -sh documentos","Descubra quem ocupa espaço."],
+["free","Mostra uso da memória RAM.","free -h","Verifique memória disponível."],
+["top","Monitor de processos em tempo real.","top","Saia pressionando q."],
+["ps","Lista processos ativos.","ps aux","Mostra PID dos processos."]
+]
+},
+{
+titulo:"🔐 Bloco 5: Administração e Permissões",
+itens:[
+["sudo","Executa como administrador.","sudo apt update","Necessário para tarefas administrativas."],
+["apt","Gerenciador de pacotes.","sudo apt install git","Instala, remove e atualiza programas."],
+["chmod","Altera permissões.","chmod 755 script.sh","Torna arquivos executáveis."],
+["chown","Altera proprietário.","sudo chown usuario arquivo.txt","Corrige problemas de permissões."],
+["passwd","Altera senha do usuário.","passwd","Solicita senha atual e nova senha."]
+]
+},
+{
+titulo:"🌐 Bloco 6: Redes e Utilitários",
+itens:[
+["man","Manual oficial dos comandos.","man ls","Saia pressionando q."],
+["ping","Testa conectividade.","ping google.com","Pare com Ctrl+C."],
+["curl / wget","Baixa arquivos da internet.","wget https://exemplo.com","Muito usado em servidores."],
+["systemctl","Controla serviços do Linux.","sudo systemctl status apache2","Também suporta start, stop e restart."],
+["clear","Limpa a tela do terminal.","clear","Mantém o terminal organizado."]
+]
+}
+];
+
+const container=document.getElementById("content");
+
+function render(filtro=""){
+
+container.innerHTML="";
+
+dados.forEach(bloco=>{
+
+let html="";
+
+bloco.itens.forEach(cmd=>{
+
+const texto=(cmd.join(" ")).toLowerCase();
+
+if(texto.includes(filtro.toLowerCase())){
+
+html+=`
+<div class="command">
+<h3>${cmd[0]}</h3>
+
+<p><strong>Explicação:</strong><br>${cmd[1]}</p>
+
+<pre>${cmd[2]}</pre>
+
+<p><strong>Uso:</strong><br>${cmd[3]}</p>
+
+<button onclick="copiar('${cmd[2]}')">📋 Copiar comando</button>
+
+</div>
+`;
+
+}
+
+});
+
+if(html!=""){
+container.innerHTML+=`
+<section>
+<h2>${bloco.titulo}</h2>
+${html}
+</section>
+`;
+}
+
+});
+
+}
+
+render();
+
+document.getElementById("search").addEventListener("input",e=>{
+render(e.target.value);
+});
+
+function copiar(txt){
+
+navigator.clipboard.writeText(txt);
+
+const toast=document.getElementById("toast");
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},1800);
+
+}
+
+</script>
+
+</body>
+</html>
