@@ -1,4 +1,6 @@
-[15:56, 02/07/2026] CHAT CHAT: ```markdown
+[15:56, 02/07/2026] CHAT CHAT: 
+
+```markdown
 A SOBERANIA DE DEUS
 
 > Para o consolo e tranquilidade de nossos corações nesses dias tão cheios de ensinos heréticos por meio de falsos profetas.
