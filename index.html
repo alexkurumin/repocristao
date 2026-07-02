@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz — Catecismo Maior de Westminster</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --ink: #2b2620;
+    --parchment: #f3ecdd;
+    --parchment-2: #e9dfc8;
+    --gold: #9c7a32;
+    --gold-deep: #7a5e22;
+    --maroon: #6e2c2c;
+    --green: #3f5c43;
+    --line: #c9b98f;
+    --shadow: rgba(43,38,32,0.18);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: radial-gradient(ellipse at top, #fbf7ec 0%, var(--parchment) 45%, var(--parchment-2) 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    min-height: 100vh;
+    padding: 32px 16px 80px;
+  }
+
+  .wrap{
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  header{
+    text-align: center;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .eyebrow{
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 10px;
+  }
+  h1{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 6vw, 42px);
+    margin: 0 0 6px;
+    letter-spacing: 0.01em;
+  }
+  .subtitle{
+    font-style: italic;
+    font-size: 15px;
+    color: #5a5142;
+  }
+  .ornament{
+    width: 80px; height: 1px;
+    background: var(--gold);
+    margin: 14px auto;
+    position: relative;
+  }
+  .ornament::before, .ornament::after{
+    content: '✦';
+    position: absolute;
+    top: -7px;
+    color: var(--gold);
+    font-size: 12px;
+  }
+  .ornament::before{ left: -16px; }
+  .ornament::after{ right: -16px; }
+
+  .progress-bar{
+    height: 4px;
+    background: var(--parchment-2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0 0 6px;
+  }
+  .progress-fill{
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  .progress-label{
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #7a7058;
+    text-align: right;
+    margin-bottom: 18px;
+  }
+
+  .card{
+    background: #fffdf7;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    box-shadow: 0 8px 30px var(--shadow);
+    padding: 32px 28px;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .card::before{
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid #e3d6ae;
+    pointer-events: none;
+    border-radius: 2px;
+  }
+
+  .part-tag{
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--maroon);
+    margin-bottom: 12px;
+  }
+
+  .question{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(19px, 3.5vw, 23px);
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0 0 22px;
+  }
+
+  .options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .option{
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    text-align: left;
+    background: #fbf7ec;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 13px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    line-height: 1.45;
+  }
+  .option:hover:not(:disabled){
+    border-color: var(--gold-deep);
+    background: #fff;
+  }
+  .option:disabled{ cursor: default; }
+  .option.correct{
+    background: #eaf1e8;
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .option.incorrect{
+    background: #f5e7e3;
+    border-color: var(--maroon);
+    color: var(--maroon);
+  }
+  .option.faded{ opacity: 0.55; }
+
+  .feedback{
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 3px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback.show{ display: block; }
+  .feedback.right{ background: #eaf1e8; border-left: 3px solid var(--green); color: #2c4a30; }
+  .feedback.wrong{ background: #f5e7e3; border-left: 3px solid var(--maroon); color: #5e2424; }
+  .feedback .ref{
+    display: block;
+    margin-top: 6px;
+    font-style: italic;
+    color: #6b6354;
+  }
+
+  .nav-row{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  .next-btn{
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--maroon);
+    color: #fff5ea;
+    border: none;
+    border-radius: 3px;
+    padding: 11px 24px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s, transform 0.3s, background 0.15s;
+    margin-top: 16px;
+  }
+  .next-btn.show{ opacity: 1; transform: translateY(0); }
+  .next-btn:hover{ background: var(--gold-deep); }
+
+  .result-card{
+    text-align: center;
+    padding: 44px 28px;
+  }
+  .result-score{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--maroon);
+    margin: 6px 0;
+  }
+  .result-msg{
+    font-style: italic;
+    font-size: 16px;
+    margin-bottom: 22px;
+    color: #5a5142;
+  }
+  .result-list{
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #5a5142;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+  .result-list div{ padding: 4px 0; display:flex; justify-content: space-between; gap: 12px;}
+  .restart-btn{
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--maroon);
+    color: var(--maroon);
+    border-radius: 3px;
+    padding: 11px 26px;
+    cursor: pointer;
+    margin-top: 22px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .restart-btn:hover{ background: var(--maroon); color: #fff5ea; }
+
+  footer{
+    text-align: center;
+    margin-top: 30px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: #9a8f74;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Igreja Presbiteriana Reformada</div>
+    <h1>Catecismo Maior de Westminster</h1>
+    <div class="ornament"></div>
+    <div class="subtitle">Quiz de verificação de entendimento</div>
+  </header>
+
+  <div id="quiz-area">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">Pergunta 1 de 20</div>
+    <div class="card" id="questionCard"></div>
+  </div>
+
+  <footer>“O fim supremo e principal do homem é glorificar a Deus e gozá-lo para sempre.”</footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    part: "Parte I — De Deus e das Sagradas Escrituras",
+    q: "Qual é o fim supremo e principal do homem, segundo a primeira pergunta do Catecismo?",
+    options: [
+      "Obedecer aos mandamentos para alcançar a vida eterna",
+      "Glorificar a Deus e gozá-lo para sempre",
+      "Pregar o Evangelho a todas as nações",
+      "Viver em santidade e retidão perpétuas"
+    ],
+    correct: 1,
+    explain: "A resposta exata da pergunta 1 é: glorificar a Deus e gozá-lo para sempre (Rm 11.36; 1Co 10.31)."
+  },
+  {
+    part: "Parte I — De Deus e das Sagradas Escrituras",
+    q: "O que demonstra de modo suficiente e eficaz que existe um Deus, para a salvação dos homens?",
+    options: [
+      "Somente a luz da natureza",
+      "Somente as obras da criação",
+      "Somente a Palavra e o Espírito de Deus",
+      "A razão humana, sem necessidade de revelação"
+    ],
+    correct: 2,
+    explain: "A luz da natureza e as obras de Deus manifestam que há um Deus, mas só a Palavra e o Espírito o revelam suficientemente para a salvação (pergunta 2)."
+  },
+  {
+    part: "Parte I — De Deus e das Sagradas Escrituras",
+    q: "Quantas pessoas há na Divindade, e como se relacionam entre si quanto à essência?",
+    options: [
+      "Três pessoas, de substâncias diferentes mas igual poder",
+      "Três pessoas, da mesma substância, iguais em poder e glória",
+      "Uma só pessoa, manifestada em três formas",
+      "Duas pessoas principais e uma subordinada"
+    ],
+    correct: 1,
+    explain: "Pergunta 9: há três pessoas — Pai, Filho e Espírito Santo — sendo um só Deus verdadeiro e eterno, da mesma substância, iguais em poder e glória."
+  },
+  {
+    part: "Parte I — De Deus e das Sagradas Escrituras",
+    q: "Como Deus executa os seus decretos eternos?",
+    options: [
+      "Apenas pela obra da criação",
+      "Apenas pela obra da providência",
+      "Nas obras da criação e da providência",
+      "Pela vontade autônoma das criaturas"
+    ],
+    correct: 2,
+    explain: "Pergunta 14: Deus executa os seus decretos nas obras da criação e da providência, segundo sua presciência infalível."
+  },
+  {
+    part: "Parte II — Da Queda do Homem e do Pecado",
+    q: "Por que todo o gênero humano caiu na primeira transgressão de Adão?",
+    options: [
+      "Porque cada pessoa peca individualmente, sem relação com Adão",
+      "Porque o pacto foi feito com Adão como representante de toda a sua posteridade",
+      "Porque Satanás tentou cada ser humano separadamente",
+      "Porque o pecado é apenas um costume cultural transmitido"
+    ],
+    correct: 1,
+    explain: "Pergunta 22: o pacto foi feito com Adão como representante, não só para si, mas para toda a sua posteridade; por isso todos pecaram nele e caíram com ele."
+  },
+  {
+    part: "Parte II — Da Queda do Homem e do Pecado",
+    q: "Em que consiste o 'pecado original'?",
+    options: [
+      "Apenas nos pecados cometidos voluntariamente após o nascimento",
+      "Na culpa do primeiro pecado de Adão, na falta de retidão e na corrupção da natureza",
+      "Somente na ignorância humana acerca de Deus",
+      "Em um castigo temporário que desaparece com o batismo"
+    ],
+    correct: 1,
+    explain: "Pergunta 25: o pecado original consiste na culpa do pecado de Adão, na falta da retidão original e na corrupção da natureza, que inclina ao mal continuamente."
+  },
+  {
+    part: "Parte II — Da Queda do Homem e do Pecado",
+    q: "Como Deus livra os escolhidos do estado de pecado e miséria?",
+    options: [
+      "Pelo mérito das boas obras humanas",
+      "Pelo pacto da graça, por puro amor e misericórdia",
+      "Pela observância estrita da lei mosaica",
+      "Por meio da reencarnação espiritual"
+    ],
+    correct: 1,
+    explain: "Pergunta 30: Deus, por puro amor e misericórdia, livra os escolhidos pelo segundo pacto, chamado pacto da graça."
+  },
+  {
+    part: "Parte III — Do Pacto da Graça e da Obra de Cristo",
+    q: "Por que era necessário que o Mediador fosse Deus E homem em uma só pessoa?",
+    options: [
+      "Para impressionar mais os seres humanos com sua autoridade",
+      "Para que as obras de cada natureza fossem aceitas por Deus a nosso favor, como obras de uma só pessoa",
+      "Apenas por uma questão simbólica sem necessidade real",
+      "Porque a natureza divina sozinha não poderia existir"
+    ],
+    correct: 1,
+    explain: "Pergunta 40: era necessário que o Mediador fosse Deus e homem em uma só pessoa para que as obras de cada natureza fossem aceitas por Deus a nosso favor."
+  },
+  {
+    part: "Parte III — Do Pacto da Graça e da Obra de Cristo",
+    q: "Quais são as três funções (ofícios) que Cristo exerce como Mediador?",
+    options: [
+      "Rei, juiz e legislador",
+      "Profeta, sacerdote e rei",
+      "Mestre, servo e advogado",
+      "Pastor, anjo e testemunha"
+    ],
+    correct: 1,
+    explain: "Pergunta 42-45: Cristo foi ungido com o Espírito Santo para exercer as funções de profeta, sacerdote e rei de sua igreja."
+  },
+  {
+    part: "Parte III — Do Pacto da Graça e da Obra de Cristo",
+    q: "O que é justificação, segundo o Catecismo?",
+    options: [
+      "Um processo gradual de melhoria moral ao longo da vida",
+      "Um ato de graça em que Deus perdoa e considera justas as pessoas, pela obediência de Cristo imputada e recebida pela fé",
+      "A recompensa concedida após uma vida de boas obras",
+      "Um sacramento administrado pela igreja visível"
+    ],
+    correct: 1,
+    explain: "Pergunta 70: justificação é um ato da livre graça de Deus, em que Ele perdoa e aceita o pecador como justo, não por obras, mas pela obediência e satisfação de Cristo, imputadas e recebidas pela fé."
+  },
+  {
+    part: "Parte III — Do Pacto da Graça e da Obra de Cristo",
+    q: "Qual a principal diferença entre justificação e santificação, segundo a pergunta 77?",
+    options: [
+      "Não há diferença real entre as duas",
+      "Na justificação Deus imputa a justiça de Cristo; na santificação o Espírito infunde graça e dá forças para exercê-la",
+      "A justificação ocorre só depois da morte, a santificação nesta vida",
+      "A santificação é perfeita nesta vida; a justificação é progressiva"
+    ],
+    correct: 1,
+    explain: "Pergunta 77: na justificação, Deus imputa a justiça de Cristo (o pecado é perdoado, de modo perfeito e igual em todos); na santificação, o Espírito infunde graça (o pecado é subjugado, de modo progressivo e desigual)."
+  },
+  {
+    part: "Parte III — Do Pacto da Graça e da Obra de Cristo",
+    q: "Podem os crentes verdadeiros cair totalmente e finalmente do estado de graça?",
+    options: [
+      "Sim, se cometerem pecados graves o suficiente",
+      "Não — pelo amor imutável de Deus, seu pacto, a intercessão de Cristo e o Espírito que permanece neles, nunca cairão totalmente",
+      "Sim, pois a perseverança depende inteiramente do esforço humano",
+      "Não se sabe; a Escritura é omissa sobre isso"
+    ],
+    correct: 1,
+    explain: "Pergunta 79: os crentes verdadeiros nunca poderão cair total e finalmente do estado de graça, mas são conservados pelo poder de Deus mediante a fé."
+  },
+  {
+    part: "Parte IV — Da Lei de Deus e os Dez Mandamentos",
+    q: "Qual é a utilidade especial da lei moral para os já regenerados?",
+    options: [
+      "Nenhuma; estão totalmente livres dela",
+      "Mostrar-lhes quanto devem a Cristo por cumpri-la em seu lugar, provocando maior gratidão e cuidado em conformar-se a ela",
+      "Servir apenas como ameaça de condenação",
+      "Substituir a necessidade da fé em Cristo"
+    ],
+    correct: 1,
+    explain: "Pergunta 97: embora libertos da lei como pacto de obras, os regenerados têm a utilidade especial de ver quanto devem a Cristo, sendo provocados a maior gratidão e obediência."
+  },
+  {
+    part: "Parte IV — Da Lei de Deus e os Dez Mandamentos",
+    q: "Segundo as regras de interpretação dos Dez Mandamentos (pergunta 99), o que ocorre quando um dever é prescrito?",
+    options: [
+      "Nada se pode inferir sobre o pecado contrário",
+      "O pecado contrário a esse dever é proibido, e vice-versa",
+      "Apenas o dever específico mencionado importa, nada mais",
+      "Os outros mandamentos perdem força"
+    ],
+    correct: 1,
+    explain: "4ª regra da pergunta 99: onde um dever é prescrito, o pecado contrário é proibido; onde um pecado é proibido, o dever contrário é prescrito."
+  },
+  {
+    part: "Parte IV — Da Lei de Deus e os Dez Mandamentos",
+    q: "Que dia o quarto mandamento ordena guardar como o sábado cristão desde a ressurreição de Cristo?",
+    options: [
+      "O sétimo dia (sábado), permanecendo inalterado",
+      "O primeiro dia da semana, chamado Dia do Senhor",
+      "Qualquer dia escolhido livremente por cada crente",
+      "Não há mais obrigação de guardar dia algum"
+    ],
+    correct: 1,
+    explain: "Pergunta 116: era o sétimo dia até a ressurreição de Cristo; desde então é o primeiro dia da semana, chamado no N.T. de Dia do Senhor."
+  },
+  {
+    part: "Parte IV — Da Lei de Deus e os Dez Mandamentos",
+    q: "É possível a algum homem guardar perfeitamente os mandamentos de Deus nesta vida?",
+    options: [
+      "Sim, com suficiente esforço e disciplina",
+      "Sim, mas apenas os pastores e líderes espirituais",
+      "Não — ninguém é capaz disso, mas os transgride diariamente em pensamentos, palavras e obras",
+      "Sim, após a santificação completa, ainda nesta vida"
+    ],
+    correct: 2,
+    explain: "Pergunta 149: nenhum homem é capaz de guardar perfeitamente os mandamentos de Deus nesta vida, violando-os diariamente."
+  },
+  {
+    part: "Parte V — Dos Meios de Graça: a Palavra e os Sacramentos",
+    q: "Por que os sacramentos se tornam meios eficazes de salvação?",
+    options: [
+      "Por um poder inerente aos próprios elementos materiais",
+      "Pela piedade pessoal de quem os administra",
+      "Unicamente pela operação do Espírito Santo e pela bênção de Cristo que os instituiu",
+      "Pela quantidade de pessoas presentes na celebração"
+    ],
+    correct: 2,
+    explain: "Pergunta 161: os sacramentos não têm poder em si nem dependem da piedade do ministrante; tornam-se eficazes pela operação do Espírito Santo e a bênção de Cristo."
+  },
+  {
+    part: "Parte V — Dos Meios de Graça: a Palavra e os Sacramentos",
+    q: "Quantos sacramentos Cristo instituiu sob o Novo Testamento, e quais são?",
+    options: [
+      "Sete sacramentos, incluindo confissão e ordenação",
+      "Apenas um: a Ceia do Senhor",
+      "Dois: o Batismo e a Ceia do Senhor",
+      "Três: Batismo, Ceia do Senhor e confirmação"
+    ],
+    correct: 2,
+    explain: "Pergunta 164: sob o Novo Testamento, Cristo instituiu somente dois sacramentos em sua Igreja: o Batismo e a Ceia do Senhor."
+  },
+  {
+    part: "Parte V — Dos Meios de Graça: a Palavra e os Sacramentos",
+    q: "Como o corpo e o sangue de Cristo são recebidos por quem participa dignamente da Ceia do Senhor?",
+    options: [
+      "De modo corporal e carnal, pois o pão se transforma literalmente em carne",
+      "Apenas de modo simbólico, sem qualquer realidade espiritual",
+      "Espiritualmente, pela fé — verdadeira e realmente, ainda que não corporalmente",
+      "Somente os ministros recebem de fato; os demais apenas observam"
+    ],
+    correct: 2,
+    explain: "Pergunta 170: o corpo e o sangue de Cristo não estão presentes corporal ou carnalmente nos elementos, mas são recebidos espiritualmente pela fé, de modo verdadeiro e real."
+  },
+  {
+    part: "Parte VI — Da Oração e da Oração do Senhor",
+    q: "Por que devemos orar somente a Deus, e não a santos ou anjos?",
+    options: [
+      "Porque é uma tradição eclesiástica sem fundamento bíblico mais forte",
+      "Porque somente Deus pode esquadrinhar o coração, ouvir os pedidos, perdoar pecados e é digno de culto religioso",
+      "Porque os anjos e santos não têm capacidade de ouvir ninguém",
+      "Não há tal proibição; pode-se orar a qualquer um deles"
+    ],
+    correct: 1,
+    explain: "Pergunta 179: a oração é parte do culto religioso, devido somente a Deus, que sozinho pode esquadrinhar o coração e responder aos pedidos."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answers = [];
+
+const card = document.getElementById('questionCard');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+
+function renderQuestion(){
+  const item = QUESTIONS[current];
+  progressFill.style.width = ((current) / QUESTIONS.length * 100) + '%';
+  progressLabel.textContent = `Pergunta ${current + 1} de ${QUESTIONS.length}`;
+
+  card.innerHTML = `
+    <div class="part-tag">${item.part}</div>
+    <div class="question">${item.q}</div>
+    <div class="options" id="optionsRow"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav-row"><button class="next-btn" id="nextBtn">Próxima pergunta →</button></div>
+  `;
+
+  const optionsRow = document.getElementById('optionsRow');
+  item.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => selectAnswer(idx));
+    optionsRow.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx){
+  const item = QUESTIONS[current];
+  const optionBtns = document.querySelectorAll('#optionsRow .option');
+  optionBtns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === item.correct){
+      btn.classList.add('correct');
+    } else if(i === idx){
+      btn.classList.add('incorrect');
+    } else {
+      btn.classList.add('faded');
+    }
+  });
+
+  const isCorrect = idx === item.correct;
+  if(isCorrect) score++;
+  answers.push(isCorrect);
+
+  const feedback = document.getElementById('feedback');
+  feedback.classList.add('show', isCorrect ? 'right' : 'wrong');
+  feedback.innerHTML = (isCorrect ? '✓ Correto. ' : '✗ Não exatamente. ') + item.explain;
+
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.classList.add('show');
+  nextBtn.textContent = (current === QUESTIONS.length - 1) ? 'Ver resultado →' : 'Próxima pergunta →';
+  nextBtn.addEventListener('click', goNext);
+}
+
+function goNext(){
+  current++;
+  if(current < QUESTIONS.length){
+    renderQuestion();
+  } else {
+    renderResult();
+  }
+}
+
+function renderResult(){
+  progressFill.style.width = '100%';
+  progressLabel.textContent = `Concluído — ${QUESTIONS.length} de ${QUESTIONS.length}`;
+
+  const pct = Math.round((score / QUESTIONS.length) * 100);
+  let msg;
+  if(pct === 100) msg = "Domínio pleno — você conhece bem o Catecismo Maior.";
+  else if(pct >= 80) msg = "Excelente entendimento das doutrinas tratadas.";
+  else if(pct >= 60) msg = "Bom entendimento — vale revisar os pontos perdidos.";
+  else msg = "Há espaço para revisar o documento com mais atenção.";
+
+  let listHtml = '';
+  QUESTIONS.forEach((item, i) => {
+    listHtml += `<div><span>${i+1}. ${item.part.split('—')[0].trim()}</span><span>${answers[i] ? '✓' : '✗'}</span></div>`;
+  });
+
+  card.innerHTML = `
+    <div class="result-card">
+      <div class="part-tag">Resultado final</div>
+      <div class="result-score">${score} / ${QUESTIONS.length}</div>
+      <div class="result-msg">${msg}</div>
+      <button class="restart-btn" id="restartBtn">Refazer o quiz</button>
+      <div class="result-list">${listHtml}</div>
+    </div>
+  `;
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    current = 0; score = 0; answers = [];
+    renderQuestion();
+  });
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
