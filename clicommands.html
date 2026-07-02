@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLI Terminal - Guia de Comandos Linux</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #e2e8f0;
+            --accent-color: #38bdf8;
+            --accent-green: #34d399;
+            --accent-pink: #f472b6;
+            --border-color: #334155;
+            --code-bg: #020617;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .block-title {
+            color: var(--accent-green);
+            border-bottom: 2px solid var(--accent-green);
+            padding-bottom: 5px;
+            margin: 40px 0 20px 0;
+            font-size: 1.8rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .card h3 {
+            color: var(--accent-pink);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+
+        .card strong {
+            color: #93c5fd;
+        }
+
+        .example-box {
+            background-color: var(--code-bg);
+            color: var(--accent-green);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Guia Prático: CLI Terminal</h1>
+            <p>Dominar a linha de comando (CLI) é o primeiro passo para se tornar um usuário ou administrador eficiente no Linux. Abaixo, listei 30 comandos essenciais que você precisará usar, organizados para facilitar seus estudos.</p>
+        </header>
+
+        <!-- Bloco 1 -->
+        <h2 class="block-title">Bloco 1: Navegação e Informações Básicas</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>pwd</h3>
+                <p><strong>Explicação:</strong> Mostra o caminho completo do diretório (pasta) onde você está no momento.</p>
+                <div class="example-box">$ pwd</div>
+                <p><strong>Uso:</strong> Ideal para saber "onde estou" antes de criar ou mover arquivos.</p>
+            </div>
+            <div class="card">
+                <h3>ls</h3>
+                <p><strong>Explicação:</strong> Lista todos os arquivos e pastas presentes no diretório atual.</p>
+                <div class="example-box">$ ls -la</div>
+                <p><strong>Uso:</strong> Use <code>ls -l</code> para detalhes e <code>-a</code> para arquivos ocultos.</p>
+            </div>
+            <div class="card">
+                <h3>cd</h3>
+                <p><strong>Explicação:</strong> Permite navegar e entrar em diferentes diretórios.</p>
+                <div class="example-box">$ cd /var/log</div>
+                <p><strong>Uso:</strong> Use <code>cd ..</code> para voltar e <code>cd ~</code> para ir à pasta Home.</p>
+            </div>
+            <div class="card">
+                <h3>mkdir</h3>
+                <p><strong>Explicação:</strong> Cria uma nova pasta ou diretório.</p>
+                <div class="example-box">$ mkdir projetos</div>
+                <p><strong>Uso:</strong> Adicione <code>-p</code> para criar pastas dentro de pastas que não existem.</p>
+            </div>
+            <div class="card">
+                <h3>history</h3>
+                <p><strong>Explicação:</strong> Exibe o histórico de todos os comandos digitados recentemente.</p>
+                <div class="example-box">$ history</div>
+                <p><strong>Uso:</strong> Útil para lembrar um comando longo usado há alguns dias.</p>
+            </div>
+        </div>
+
+        <!-- Bloco 2 -->
+        <h2 class="block-title">Bloco 2: Gerenciamento de Arquivos</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>touch</h3>
+                <p><strong>Explicação:</strong> Cria um arquivo vazio ou atualiza a data de modificação de um existente.</p>
+                <div class="example-box">$ touch arquivo.txt</div>
+                <p><strong>Uso:</strong> A forma mais rápida de criar um arquivo de texto novo.</p>
+            </div>
+            <div class="card">
+                <h3>cat</h3>
+                <p><strong>Explicação:</strong> Exibe o conteúdo de um arquivo de texto diretamente no terminal.</p>
+                <div class="example-box">$ cat arquivo.txt</div>
+                <p><strong>Uso:</strong> Bom para ler arquivos pequenos.</p>
+            </div>
+            <div class="card">
+                <h3>nano</h3>
+                <p><strong>Explicação:</strong> Um editor de texto simples e amigável direto no terminal.</p>
+                <div class="example-box">$ nano arquivo.txt</div>
+                <p><strong>Uso:</strong> Salve com <code>Ctrl+O</code> e saia com <code>Ctrl+X</code>.</p>
+            </div>
+            <div class="card">
+                <h3>cp</h3>
+                <p><strong>Explicação:</strong> Copia arquivos ou pastas de um lugar para outro.</p>
+                <div class="example-box">$ cp arquivo.txt /backup/</div>
+                <p><strong>Uso:</strong> Use <code>-r</code> para copiar pastas inteiras com tudo dentro.</p>
+            </div>
+            <div class="card">
+                <h3>mv</h3>
+                <p><strong>Explicação:</strong> Move arquivos/pastas de lugar ou simplesmente os renomeia.</p>
+                <div class="example-box">$ mv arquivo.txt doc.txt</div>
+                <p><strong>Uso:</strong> Serve tanto para mover ou renomear.</p>
+            </div>
+        </div>
+
+        <!-- Bloco 3 -->
+        <h2 class="block-title">Bloco 3: Manutenção e Limpeza</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>rm</h3>
+                <p><strong>Explicação:</strong> Deleta arquivos ou pastas permanentemente.</p>
+                <div class="example-box">$ rm arquivo.txt</div>
+                <p><strong>Uso:</strong> Muito cuidado! Use <code>rm -rf pasta</code> para apagar uma pasta e tudo dentro.</p>
+            </div>
+            <div class="card">
+                <h3>rmdir</h3>
+                <p><strong>Explicação:</strong> Remove um diretório, desde que ele esteja totalmente vazio.</p>
+                <div class="example-box">$ rmdir pasta_vazia</div>
+                <p><strong>Uso:</strong> Comando seguro para apagar pastas que você tem certeza que estão vazias.</p>
+            </div>
+            <div class="card">
+                <h3>find</h3>
+                <p><strong>Explicação:</strong> Procura por arquivos ou diretórios em todo o sistema por vários critérios.</p>
+                <div class="example-box">$ find /home -name "*.txt"</div>
+                <p><strong>Uso:</strong> Extremamente útil para encontrar arquivos perdidos.</p>
+            </div>
+            <div class="card">
+                <h3>grep</h3>
+                <p><strong>Explicação:</strong> Busca por palavras ou padrões específicos dentro de arquivos.</p>
+                <div class="example-box">$ grep "erro" log.txt</div>
+                <p><strong>Uso:</strong> Ideal para ler relatórios longos (logs) e achar linhas rapidamente.</p>
+            </div>
+            <div class="card">
+                <h3>echo</h3>
+                <p><strong>Explicação:</strong> Exibe uma linha de texto no terminal ou grava texto em um arquivo.</p>
+                <div class="example-box">$ echo "Olá Mundo" > ola.txt</div>
+                <p><strong>Uso:</strong> Usado para criar arquivos rapidamente ou imprimir variáveis.</p>
+            </div>
+        </div>
+
+        <!-- Bloco 4 -->
+        <h2 class="block-title">Bloco 4: Monitoramento do Sistema</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>df</h3>
+                <p><strong>Explicação:</strong> Mostra o espaço disponível e utilizado em seus discos.</p>
+                <div class="example-box">$ df -h</div>
+                <p><strong>Uso:</strong> A opção <code>-h</code> torna o tamanho legível (Human-readable) em Gigabytes.</p>
+            </div>
+            <div class="card">
+                <h3>du</h3>
+                <p><strong>Explicação:</strong> Mostra o tamanho exato de arquivos e pastas.</p>
+                <div class="example-box">$ du -sh /documentos</div>
