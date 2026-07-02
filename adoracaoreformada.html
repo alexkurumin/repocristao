@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como Deus quer ser adorado – Artigo Teológico Reformado</title>
+<meta name="description" content="Artigo teológico reformado sobre o Princípio Regulador do Culto, baseado em João 4:23-24.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Fragment+Mono:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        'serif': ['"Crimson Pro"', 'Georgia', 'serif'],
+        'display': ['"Fraunces"', '"Crimson Pro"', 'Georgia', 'serif'],
+        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'mono': ['"Fragment Mono"', 'ui-monospace', 'monospace'],
+      },
+      colors: {
+        parchment: {
+          DEFAULT: '#f7f3ed',
+          50: '#fdfcf9',
+          100: '#f7f3ed',
+          200: '#e9e2d6',
+        },
+        ink: {
+          DEFAULT: '#1b1e24',
+          700: '#2a2f39',
+          800: '#1b1e24',
+          900: '#14161c',
+        },
+        clay: {
+          DEFAULT: '#b5452a',
+          600: '#b5452a',
+          700: '#94361f',
+        },
+        sage: {
+          DEFAULT: '#4a5c4f',
+          600: '#4a5c4f',
+          700: '#38473c',
+        },
+        brass: {
+          DEFAULT: '#b58b4a',
+          500: '#b58b4a',
+        },
+        line: {
+          light: '#ddd5c7',
+          dark: '#2d333d',
+        }
+      }
+    }
+  }
+}
+</script>
+<style type="text/css">
+  :root {
+    --bg: #f7f3ed;
+    --fg: #1b1e24;
+    --muted: #5b5a59;
+    --card-bg: #ffffff;
+    --line: #ddd5c7;
+    --accent: #b5452a;
+    --accent-strong: #94361f;
+  }
+  .dark {
+    --bg: #14161c;
+    --fg: #e6e0d6;
+    --muted: #a49d8f;
+    --card-bg: #1b1e24;
+    --line: #2d333d;
+    --accent: #d76a4a;
+    --accent-strong: #e57b5a;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Crimson Pro', Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .ui-font { font-family: Inter, system-ui, sans-serif; }
+  .mono-font { font-family: "Fragment Mono", ui-monospace, monospace; }
+
+  /* Reading measure */
+  .prose-reform {
+    font-size: 1.175rem;
+    line-height: 1.82;
+  }
+  .prose-reform p {
+    margin-bottom: 1.25em;
+  }
+  @media (max-width: 640px) {
+    .prose-reform { font-size: 1.075rem; line-height: 1.78; }
+  }
+
+  /* Verse block */
+  .verse-block {
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+    margin: 1.75rem 0;
+    font-style: italic;
+    position: relative;
+  }
+  .verse-block .verse-ref {
+    display: block;
+    font-style: normal;
+    font-family: Inter, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--accent);
+    margin-top: .6rem;
+  }
+
+  /* Doctrine tag */
+  .doctrine-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--line));
+    color: var(--accent-strong);
+    font-family: Inter, sans-serif;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: .35rem .65rem;
+    border-radius: 999px;
+  }
+  .dark .doctrine-chip {
+    background: rgba(215,106,74,0.09);
+    border-color: rgba(215,106,74,0.22);
+    color: #e8987a;
+  }
+
+  /* TOC active */
+  .toc-link {
+    display: block;
+    padding: .55rem .75rem;
+    border-radius: 8px;
+    font-family: Inter, sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--muted);
+    transition: all .18s ease;
+    border-left: 2px solid transparent;
+  }
+  .toc-link:hover { color: var(--fg); background: color-mix(in srgb, var(--fg) 3%, transparent); }
+  .toc-link.active {
+    color: var(--fg);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border-left-color: var(--accent);
+    font-weight: 600;
+  }
+  .dark .toc-link.active { background: rgba(215,106,74,0.08); }
+
+  /* Element cards */
+  .element-card {
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.35rem 1.35rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .element-card:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); transform: translateY(-2px); }
+
+  /* Book list */
+  .book-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .book-item:last-child { border-bottom: none; }
+
+  /* Reading progress */
+  #reading-progress {
+    position: fixed; top:0; left:0; height:3px; background:#b5452a; z-index: 60; width:0%;
+    transition: width .1s linear;
+  }
+  .dark #reading-progress { background: #d76a4a; }
+
+  /* Print */
+  @media print {
+    nav, aside, footer, #mobile-toc, #reading-progress, #back-to-top, .no-print { display: none !important; }
+    body { background: #fff !important; color: #111 !important; font-size: 12pt; }
+    .verse-block, .element-card { break-inside: avoid; border:1px solid #ccc !important; background:#fff !important; }
+    main { max-width: 100% !important; padding: 0 !important; }
+    a { text-decoration: none; color: #111; }
+  }
+</style>
+</head>
+<body class="antialiased">
+<div id="reading-progress"></div>
+
+<!-- TOP UTILITY BAR -->
+<header class="border-b border-[var(--line)] bg-[var(--card-bg)]/90 backdrop-blur sticky top-0 z-40 no-print">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[60px] flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-[8px] bg-[#1b1e24] dark:bg-[#e6e0d6] flex items-center justify-center">
+        <span class="font-display font-700 text-[15px] text-[#f7f3ed] dark:text-[#14161c]">SC</span>
+      </div>
+      <div class="hidden sm:block">
+        <div class="ui-font text-[11px] uppercase tracking-widest text-[var(--muted)]">Teologia Reformada • Sola Scriptura</div>
+        <div class="font-display font-600 text-[15.5px] -mt-0.5">Soli Deo Gloria</div>
+      </div>
+      <div class="sm:hidden ui-font text-[11px] font-600 tracking-wider text-[var(--muted)]">TEOLOGIA REFORMADA</div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="copy-link-btn" class="ui-font hidden sm:inline-flex items-center gap-1.5 text-[12.5px] font-medium px-3 py-1.5 rounded-full border border-[var(--line)] hover:border-zinc-400 transition text-[var(--muted)] hover:text-[var(--fg)]">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Copiar link
+      </button>
+      <button id="print-btn" class="ui-font hidden sm:inline-flex items-center gap-1.5 text-[12.5px] font-medium px-3 py-1.5 rounded-full border border-[var(--line)] hover:border-zinc-400 transition text-[var(--muted)] hover:text-[var(--fg)]">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+        Imprimir
+      </button>
+      <div class="w-px h-5 bg-[var(--line)] mx-1 hidden sm:block"></div>
+      <button id="theme-toggle" aria-label="Alternar tema" class="w-9 h-9 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--fg)] transition">
+        <svg id="icon-sun" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" class="hidden dark:block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg id="icon-moon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" class="block dark:hidden"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO / HEAD -->
+<section class="border-b border-[var(--line)] bg-gradient-to-b from-[var(--card-bg)] to-[var(--bg)]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+    <div class="max-w-3xl">
+      <div class="ui-font text-[11.5px] font-600 uppercase tracking-widest text-clay-600 dark:text-[#d76a4a] mb-4">Liturgia • Doutrina • Confissão de Westminster, Cap. 21</div>
+      <h1 class="font-display text-[44px] sm:text-[64px] lg:text-[76px] leading-[0.95] tracking-[-0.025em] font-700">
+        Como Deus<br>quer ser adorado
+      </h1>
+      <p class="prose-reform text-[var(--muted)] mt-6 max-w-2xl">
+        Um estudo sobre o Princípio Regulador do Culto, a adoração em espírito e em verdade, e a suficiência das Escrituras na liturgia reformada.
+      </p>
+
+      <!-- João 4:23-24 featured -->
+      <div class="mt-8 sm:mt-10 rounded-[18px] border border-[var(--line)] bg-[var(--card-bg)] shadow-sm px-5 sm:px-8 py-6 sm:py-7">
+        <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-[var(--muted)] mb-2">Texto central — João 4:23-24</div>
+        <blockquote class="font-serif text-[22px] sm:text-[26px] leading-relaxed">
+          “Mas a hora vem, e agora é, em que os <em>verdadeiros adoradores adorarão o Pai em espírito e em verdade</em>; porque o Pai procura a tais que assim o adorem. Deus é Espírito, e importa que os que o adoram o adorem em espírito e em verdade.”
+        </blockquote>
+        <div class="ui-font text-[11.5px] text-[var(--muted)] mt-3">ACF • João 4:23-24</div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 mt-5 ui-font text-[11.5px] text-[var(--muted)]">
+        <span class="px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-[var(--line)]">Leitura: 9 min</span>
+        <span class="px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-[var(--line)]">Calvinismo Clássico</span>
+        <span class="px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-[var(--line)]">CFW Cap. XXI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN LAYOUT -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
+  <div class="lg:grid lg:grid-cols-[250px_minmax(0,1fr)_56px] lg:gap-12 xl:gap-20">
+    
+    <!-- SIDEBAR TOC - Desktop -->
+    <aside class="hidden lg:block">
+      <div class="sticky top-[84px]">
+        <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-[var(--muted)] mb-3">Sumário</div>
+        <nav id="toc" class="space-y-1 pr-2">
+          <a href="#introducao" class="toc-link active">Introdução</a>
+          <a href="#secao-1" class="toc-link">1. O Texto Central: João 4:23-24</a>
+          <a href="#secao-2" class="toc-link">2. Fundamentos Doutrinários Reformados</a>
+          <a href="#secao-3" class="toc-link">3. Elementos Bíblicos da Adoração</a>
+          <a href="#secao-4" class="toc-link">4. Textos de Apoio e Autores</a>
+          <a href="#secao-5" class="toc-link">5. Princípios para os Dias Atuais</a>
+        </nav>
+        <div class="mt-7 pt-6 border-t border-[var(--line)] text-[12.5px] leading-relaxed text-[var(--muted)] ui-font">
+          <p class="font-600 text-[var(--fg)] mb-1">Confissão de Westminster</p>
+          <p>“A luz da natureza mostra que há um Deus… mas o modo aceitável de adorá-Lo é instituído por Ele mesmo.”<br><span class="mono-font text-[11px]">CFW XXI.I</span></p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE TOC -->
+    <div id="mobile-toc" class="lg:hidden mb-8 -mx-4 px-4 py-3 border-y border-[var(--line)] bg-[var(--card-bg)]/70 sticky top-[60px] z-30 backdrop-blur">
+      <details>
+        <summary class="ui-font text-[12px] font-600 uppercase tracking-wider cursor-pointer list-none flex items-center justify-between">Sumário das seções
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <nav class="pt-3 space-y-2 text-[15px] font-serif">
+          <a href="#introducao" class="block py-1 text-[var(--muted)] hover:text-[var(--fg)]">Introdução</a>
+          <a href="#secao-1" class="block py-1 text-[var(--muted)] hover:text-[var(--fg)]">1. João 4:23-24</a>
+          <a href="#secao-2" class="block py-1 text-[var(--muted)] hover:text-[var(--fg)]">2. Fundamentos Reformados</a>
+          <a href="#secao-3" class="block py-1 text-[var(--muted)] hover:text-[var(--fg)]">3. Elementos da Adoração</a>
+          <a href="#secao-4" class="block py-1 text-[var(--muted)] hover:text-[var(--fg)]">4. Autores Recomendados</a>
+          <a href="#secao-5" class="block py-1 text-[var(--muted)] hover:text-[var(--fg)]">5. Dias Atuais</a>
+        </nav>
+      </details>
+    </div>
+
+    <!-- ARTICLE -->
+    <main class="min-w-0">
+      <article class="prose-reform max-w-[700px]">
+        
+        <!-- INTRODUÇÃO -->
+        <section id="introducao" class="scroll-mt-24 mb-14">
+          <div class="ui-font text-[11px] font-700 uppercase tracking-widest text-clay-600 dark:text-[#d76a4a] mb-3">Introdução</div>
+          <p>
+            Deus quer ser adorado de forma exclusiva, reverente e estritamente baseada em Sua Palavra revelada. Na teologia reformada (calvinista), isso é sintetizado pelo <strong>Princípio Regulador do Culto</strong>, que afirma que apenas o que Deus ordenou na Bíblia é permitido na adoração. A adoração não é sobre preferências humanas, mas sobre a exaltação da soberania divina.
+          </p>
+          <p>
+            A cosmovisão reformada, amparada pelas Escrituras e autores como João Calvino (<em>As Institutas da Religião Cristã</em>), fornece um panorama claro de como cultuar a Deus corretamente.
+          </p>
+
+          <div class="flex flex-wrap gap-2 my-6">
+            <span class="doctrine-chip">Sola Scriptura</span>
+            <span class="doctrine-chip">Soli Deo Gloria</span>
+            <span class="doctrine-chip">Princípio Regulador do Culto</span>
+          </div>
+        </section>
+
+        <!-- SEÇÃO 1 -->
+        <section id="secao-1" class="scroll-mt-24 mb-16 border-t border-[var(--line)] pt-12">
+          <h2 class="font-display text-[32px] sm:text-[40px] font-700 tracking-[-0.015em] leading-tight mb-6">1. O Texto Central: João 4:23-24</h2>
+          <p>
+            A principal passagem bíblica que define como Deus deseja ser adorado é João 4:23-24, dita por Jesus à mulher samaritana.
+          </p>
+
+          <div class="verse-block">
+            “Mas a hora vem, e agora é...”
+            <span class="verse-ref">João 4:23a</span>
+          </div>
+          <p>
+            Marca a transição da adoração centralizada no Antigo Testamento (focada em rituais, templo físico e sacrifícios de animais) para a Nova Aliança. O véu do templo foi rasgado e o acesso a Deus agora é direto, por meio de Cristo.
+          </p>
+
+          <div class="verse-block">
+            “...em espírito...”
+            <span class="verse-ref">João 4:23b</span>
+          </div>
+          <p>
+            A adoração verdadeira é interna e regenerada. Na doutrina da Depravação Total, o homem por si só está morto espiritualmente e não pode adorar. É o Espírito Santo quem vivifica o coração, permitindo uma devoção autêntica e guiada pela Verdade (Efésios 2:1).
+          </p>
+
+          <div class="verse-block">
+            “...e em verdade...”
+            <span class="verse-ref">João 4:24</span>
+          </div>
+          <p>
+            Refere-se à adoração em conformidade com a revelação divina. Jesus é a Verdade (João 14:6) e a Palavra de Deus é a Verdade (João 17:17). Adorar em verdade significa rejeitar invenções humanas, idolatria e misticismos, e focar em conhecer e exaltar a Deus como Ele Se revelou.
+          </p>
+        </section>
+
+        <!-- SEÇÃO 2 -->
+        <section id="secao-2" class="scroll-mt-24 mb-16 border-t border-[var(--line)] pt-12">
+          <h2 class="font-display text-[32px] sm:text-[40px] font-700 tracking-[-0.015em] leading-tight mb-6">2. Fundamentos Doutrinários e Históricos Reformados</h2>
+
+          <div class="space-y-8">
+            <div>
+              <h3 class="font-display text-[22px] sm:text-[24px] font-600 mb-2">Princípio Regulador do Culto (PRC)</h3>
+              <p>
+                É a coluna vertebral da adoração calvinista. Historicamente lapidado por João Calvino e oficializado pela <strong>Confissão de Fé de Westminster (Capítulo 21)</strong>, ele estabelece que a forma aceitável de adorar a Deus é instituída por Ele mesmo e limitada pela Sua vontade revelada. Portanto, o que não é expressamente ordenado na Bíblia como elemento de culto é proibido.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-display text-[22px] sm:text-[24px] font-600 mb-2">Soberania de Deus</h3>
+              <p>
+                Diferente da visão antropocêntrica (onde o culto serve para fazer o homem se sentir bem), no calvinismo, Deus é o centro (<em>Soli Deo Gloria</em>) e o Auditório Principal. Ele é o Rei absoluto que busca os Seus eleitos para adorá-Lo, e não alguém que barganha favores em rituais.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-display text-[22px] sm:text-[24px] font-600 mb-2">Centralidade das Escrituras (Sola Scriptura)</h3>
+              <p>
+                Calvino argumentou em suas obras que a adoração deve ser regulada unicamente pela Bíblia. Inovações litúrgicas sem respaldo bíblico são vistas como idolatria e superstição.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 rounded-xl border border-[var(--line)] bg-[var(--card-bg)] px-5 py-5">
+            <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-[var(--muted)] mb-2">Nota Confessional</div>
+            <p class="font-serif italic m-0 text-[18px] leading-relaxed">“Deus não pode ser adorado segundo as imaginações e invenções dos homens, nem segundo as sugestões de Satanás, ou sob qualquer representação visível, ou de qualquer outro modo não prescrito nas Sagradas Escrituras.”</p>
+            <div class="ui-font text-[11.5px] text-[var(--muted)] mt-2">Confissão de Fé de Westminster, XXI.I</div>
+          </div>
+        </section>
+
+        <!-- SEÇÃO 3 -->
+        <section id="secao-3" class="scroll-mt-24 mb-16 border-t border-[var(--line)] pt-12">
+          <h2 class="font-display text-[32px] sm:text-[40px] font-700 tracking-[-0.015em] leading-tight mb-3">3. Elementos Bíblicos da Adoração Aceitável</h2>
+          <p class="text-[var(--muted)] mb-7">Com base nas Escrituras e na tradição reformada, o culto e a adoração a Deus devem conter os seguintes elementos prescritos:</p>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="element-card sm:col-span-2">
+              <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-clay-600 dark:text-[#d76a4a]">Elemento 1</div>
+              <h4 class="font-display text-[22px] font-600 mt-1 mb-1.5">Leitura e Pregação da Palavra</h4>
+              <p class="m-0 text-[17.5px] leading-relaxed text-[var(--muted)]">O ensino e a exposição fiel das Escrituras são o coração do culto, pois é através da Palavra que Deus fala ao Seu povo.</p>
+            </div>
+            <div class="element-card">
+              <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-clay-600 dark:text-[#d76a4a]">Elemento 2</div>
+              <h4 class="font-display text-[20px] font-600 mt-1 mb-1.5">Oração</h4>
+              <p class="m-0 text-[17px] leading-relaxed text-[var(--muted)]">Dirigida unicamente a Deus (mediante Cristo), reconhecendo a Sua soberania, gratidão e dependência (Mateus 6:9-13; Filipenses 4:6).</p>
+            </div>
+            <div class="element-card">
+              <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-clay-600 dark:text-[#d76a4a]">Elemento 3</div>
+              <h4 class="font-display text-[20px] font-600 mt-1 mb-1.5">Cânticos e Salmos</h4>
+              <p class="m-0 text-[17px] leading-relaxed text-[var(--muted)]">A adoração através da música deve ter letras focadas em Deus, doutrinariamente ricas e congregacionais, como os Salmos bíblicos e hinos cristocêntricos (Efésios 5:19; Colossenses 3:16).</p>
+            </div>
+            <div class="element-card">
+              <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-clay-600 dark:text-[#d76a4a]">Elemento 4</div>
+              <h4 class="font-display text-[20px] font-600 mt-1 mb-1.5">Administração dos Sacramentos</h4>
+              <p class="m-0 text-[17px] leading-relaxed text-[var(--muted)]">Batismo e Ceia do Senhor, instituídos pelo próprio Cristo como sinais visíveis da Sua graça.</p>
+            </div>
+            <div class="element-card">
+              <div class="ui-font text-[10.5px] font-700 uppercase tracking-widest text-clay-600 dark:text-[#d76a4a]">Elemento 5</div>
+              <h4 class="font-display text-[20px] font-600 mt-1 mb-1.5">Ofertas e Liberalidade</h4>
+              <p class="m-0 text-[17px] leading-relaxed text-[var(--muted)]">A entrega dos dízimos e ofertas como ato de reconhecimento de que tudo pertence a Deus.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SEÇÃO 4 -->
+        <section id="secao-4" class="scroll-mt-24 mb-16 border-t border-[var(--line)] pt-12">
+          <h2 class="font-display text-[32px] sm:text-[40px] font-700 tracking-[-0.015em] leading-tight mb-3">4. Textos de Apoio e Autores Reformados Recomendados</h2>
+          <p class="text-[var(--muted)] mb-5">Para um estudo mais aprofundado, você pode buscar pelas seguintes obras clássicas e contemporâneas:</p>
+
+          <div class="rounded-[16px] border border-[var(--line)] bg-[var(--card-bg)] px-5 sm:px-7 py-2">
+            <div class="book-item">
+              <div class="ui-font text-[11px] text-[var(--muted)] pt-1 w-10 shrink-0">01</div>
+              <div>
+                <div class="font-display text-[20px] font-600">João Calvino</div>
+                <div class="font-serif text-[17.5px]"><em>As Institutas da Religião Cristã</em> (Livro III, capítulos 20 e 21)</div>
+                <p class="m-0 mt-1 text-[16.5px] text-[var(--muted)]">Calvino trata a adoração não como algo secundário, mas como o próprio fim do homem e a base de toda a religião cristã.</p>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="ui-font text-[11px] text-[var(--muted)] pt-1 w-10 shrink-0">02</div>
+              <div>
+                <div class="font-display text-[20px] font-600">A. W. Tozer</div>
+                <div class="font-serif text-[17.5px]"><em>O Conhecimento do Santo</em></div>
+                <p class="m-0 mt-1 text-[16.5px] text-[var(--muted)]">Um clássico para compreender a grandeza dos atributos de Deus, gerando uma adoração genuína baseada em quem Ele é.</p>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="ui-font text-[11px] text-[var(--muted)] pt-1 w-10 shrink-0">03</div>
+              <div>
+                <div class="font-display text-[20px] font-600">Thomas Watson</div>
+                <div class="font-serif text-[17.5px]"><em>A Oração. A Resposta do Coração.</em></div>
+              </div>
+            <div class="book-item">
+              <div class="ui-font text-[11px] text-[var(--muted)] pt-1 w-10 shrink-0">04</div>
+              <div>
+                <div class="font-display text-[20px] font-600">Geerhardus Vos e Edmund Clowney</div>
+                <p class="m-0 mt-1 text-[16.5px] text-[var(--muted)]">Obras que tratam sobre a Teologia Bíblica, mostrando a progressão histórica da adoração desde o Éden, passando pelo Tabernáculo, até Cristo e a Nova Aliança.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SEÇÃO 5 -->
+        <section id="secao-5" class="scroll-mt-24 mb-10 border-t border-[var(--line)] pt-12">
+          <h2 class="font-display text-[32px] sm:text-[40px] font-700 tracking-[-0.015em] leading-tight mb-6">5. Princípios e Aplicações para os Dias Atuais</h2>
+
+          <div class="space-y-8">
+            <div>
+              <h3 class="font-display text-[22px] sm:text-[24px] font-600 mb-2">Rejeição ao Pragmatismo</h3>
+              <p>
+                Na atualidade, muitas igrejas adotam práticas apenas porque “funcionam” ou atraem multidões. O crente reformado é desafiado a avaliar se a prática de adoração tem respaldo bíblico, mesmo que pareça antiquada ao mundo moderno.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-display text-[22px] sm:text-[24px] font-600 mb-2">Adoração como Estilo de Vida</h3>
+              <p>
+                A adoração não se restringe aos domingos (culto público). Romanos 12:1 orienta a oferecer nossos corpos em “sacrifício vivo, santo e agradável a Deus”, o que significa viver em santidade, obediência e serviço ao próximo todos os dias.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-display text-[22px] sm:text-[24px] font-600 mb-2">Reverência e Temor</h3>
+              <p>
+                Aos dias de hoje, onde a banalização do sagrado é comum, o crente deve lembrar que o nosso Deus é também um fogo consumidor (Hebreus 12:28-29). A adoração deve ser marcada pelo equilíbrio entre a intimidade conquistada por Cristo e a reverência devida à Sua majestade.
+              </p>
+            </div>
+          </div>
+
+          <div class="verse-block mt-10">
+            “Assim, recebendo nós um reino inabalável, retenhamos a graça, pela qual sirvamos a Deus de modo agradável, com reverência e santo temor; porque o nosso Deus é fogo consumidor.”
+            <span class="verse-ref">Hebreus 12:28-29</span>
+          </div>
+        </section>
+
+        <!-- FOOTER DO ARTIGO -->
+        <div class="border-t border-[var(--line)] pt-8 mt-6 flex flex-wrap items-center justify-between gap-4 ui-font text-[12.5px] text-[var(--muted)]">
+          <div>
+            Publicado em Teologia Reformada • <span class="mono-font">Jo 4:23-24 • CFW XXI</span>
+          </div>
+          <div class="flex gap-3 no-print">
+            <button id="copy-link-btn-2" class="px-3 py-1.5 rounded-full border border-[var(--line)] hover:border-zinc-400 transition">Copiar link</button>
+            <button id="print-btn-2" class="px-3 py-1.5 rounded-full border border-[var(--line)] hover:border-zinc-400 transition">Imprimir / PDF</button>
+          </div>
+        </div>
+
+      </article>
+    </main>
+
+    <!-- RIGHT GUTTER / back to top (desktop) -->
+    <div class="hidden lg:block relative">
+      <button id="back-to-top" class="sticky top-[calc(100vh-120px)] opacity-0 pointer-events-none transition-opacity duration-300 ui-font text-[11px] uppercase tracking-widest text-[var(--muted)] hover:text-[var(--fg)] -rotate-90 origin-left whitespace-nowrap ml-3" aria-label="Voltar ao topo">
+        ↑ Voltar ao topo
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER SITE -->
+<footer class="border-t border-[var(--line)] py-10 mt-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ui-font text-[12.5px] text-[var(--muted)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>© 2024 • Como Deus quer ser adorado • Teologia Reformada<br><span class="text-[11.5px]">Soli Deo Gloria — Artigo confessional baseado na Confissão de Westminster.</span></div>
+    <div class="flex gap-4">
+      <a href="#introducao" class="hover:text-[var(--fg)]">Início</a>
+      <a href="#secao-4" class="hover:text-[var(--fg)]">Bibliografia</a>
+      <button id="back-to-top-mobile" class="hover:text-[var(--fg)] lg:hidden">Voltar ao topo ↑</button>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 ui-font text-[13px] font-500 bg-[#1b1e24] text-[#f7f3ed] dark:bg-[#f7f3ed] dark:text-[#1b1e24] px-4 py-2.5 rounded-full shadow-xl opacity-0 pointer-events-none transition-all duration-300 z-50">
+  Link copiado!
+</div>
+
+<script>
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const htmlEl = document.documentElement;
+  const savedTheme = localStorage.getItem('adora-theme');
+  if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    htmlEl.classList.add('dark');
+  }
+  themeToggle.addEventListener('click', () => {
+    htmlEl.classList.toggle('dark');
+    localStorage.setItem('adora-theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  // Reading progress
+  const progressBar = document.getElementById('reading-progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    progressBar.style.width = (scrolled * 100) + '%';
+    // back to top visibility
+    const btt = document.getElementById('back-to-top');
+    if (h.scrollTop > 900) {
+      btt.classList.remove('opacity-0', 'pointer-events-none');
+    } else {
+      btt.classList.add('opacity-0', 'pointer-events-none');
+    }
+  });
+
+  // TOC scrollspy
+  const sections = document.querySelectorAll('main section[id]');
+  const tocLinks = document.querySelectorAll('#toc .toc-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
+  sections.forEach(s => observer.observe(s));
+
+  // Copy link
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.href.split('#')[0]).then(() => showToast('Link copiado!'));
+  }
+  document.getElementById('copy-link-btn')?.addEventListener('click', copyLink);
+  document.getElementById('copy-link-btn-2')?.addEventListener('click', copyLink);
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.remove('opacity-0', 'pointer-events-none');
+    t.classList.add('opacity-100');
+    setTimeout(() => {
+      t.classList.add('opacity-0', 'pointer-events-none');
+      t.classList.remove('opacity-100');
+    }, 1900);
+  }
+
+  // Print
+  function doPrint(){ window.print(); }
+  document.getElementById('print-btn')?.addEventListener('click', doPrint);
+  document.getElementById('print-btn-2')?.addEventListener('click', doPrint);
+
+  // Back to top
+  function scrollTopSmooth(){ window.scrollTo({top:0, behavior:'smooth'}); }
+  document.getElementById('back-to-top')?.addEventListener('click', scrollTopSmooth);
+  document.getElementById('back-to-top-mobile')?.addEventListener('click', scrollTopSmooth);
+
+  // Smooth anchor close mobile details
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      const details = document.querySelector('#mobile-toc details');
+      if(details && details.open) details.open = false;
+    });
+  });
+</script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;var a=target.closest?target.closest("a[href]"):null;if(!a||!a.href||!/^https?:\/\//.test(a.href))return;if(a.href.replace(/#.*$/,"")===loc)return;var productId=extractProductId(target)||extractProductId(a);if(!productId)return;e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*")},true)})();</script></body>
+</html>
