@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stories - Treino Híbrido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14171A;
+    --bg2:#1B1F23;
+    --paper:#F2EFE9;
+    --run:#FF5A36;
+    --lift:#5B8CFF;
+    --muted:#9AA0A6;
+    --line:#2B3035;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html, body{
+    background:#0A0B0C;
+    font-family:'Inter',sans-serif;
+    margin:0;
+  }
+  body{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:24px;
+    padding:24px 0 60px;
+    width:100%;
+  }
+  .slide-wrap{
+    width:100%;
+    max-width:480px;
+    aspect-ratio:1080/1920;
+    overflow:hidden;
+    position:relative;
+    flex-shrink:0;
+    border-radius:12px;
+  }
+  .slide{
+    width:1080px;
+    height:1920px;
+    background:var(--bg);
+    position:absolute;
+    top:0; left:0;
+    overflow:hidden;
+    color:var(--paper);
+    transform-origin:top left;
+  }
+  .slide::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:10px;
+    background:linear-gradient(90deg, var(--run) 0%, var(--run) 49%, var(--lift) 51%, var(--lift) 100%);
+  }
+  .frame{
+    position:absolute;
+    inset:64px;
+    display:flex;
+    flex-direction:column;
+  }
+  .eyebrow{
+    font-size:28px;
+    letter-spacing:6px;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .eyebrow .dot{width:14px;height:14px;border-radius:50%;}
+  .dot.run{background:var(--run);}
+  .dot.lift{background:var(--lift);}
+  h1.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    line-height:0.92;
+    letter-spacing:1px;
+  }
+  .accent-run{color:var(--run);}
+  .accent-lift{color:var(--lift);}
+  .body-text{
+    font-size:40px;
+    line-height:1.45;
+    color:var(--paper);
+    font-weight:500;
+  }
+  .muted{color:var(--muted);}
+  .divider{
+    width:120px;
+    height:8px;
+    background:linear-gradient(90deg, var(--run), var(--lift));
+    border-radius:4px;
+    margin:36px 0;
+  }
+  .footer-tag{
+    position:absolute;
+    bottom:64px;
+    left:64px;
+    right:64px;
+    font-size:26px;
+    color:var(--muted);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-weight:600;
+    display:flex;
+    justify-content:space-between;
+  }
+  .bigword{font-size:170px;}
+  .midword{font-size:120px;}
+
+  /* SLIDE 1 - COVER */
+  #s1 .frame{justify-content:center; align-items:flex-start;}
+  #s1 .plus{
+    font-family:'Anton',sans-serif;
+    font-size:130px;
+    color:var(--muted);
+    margin:10px 0;
+  }
+  #s1 .sub{
+    font-size:44px;
+    color:var(--muted);
+    margin-top:40px;
+    font-weight:600;
+  }
+  #s1 .swipe{
+    position:absolute;
+    bottom:90px;
+    left:64px;
+    font-size:30px;
+    color:var(--paper);
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  #s1 .arrow{
+    width:48px;height:48px;
+    border-right:6px solid var(--run);
+    border-bottom:6px solid var(--run);
+    transform:rotate(-45deg);
+  }
+
+  /* generic content slide */
+  .content-slide .frame{justify-content:flex-start;}
+  .content-slide .num{
+    font-family:'Anton',sans-serif;
+    font-size:340px;
+    position:absolute;
+    right:-10px;
+    top:170px;
+    color:var(--bg2);
+    z-index:0;
+    line-height:1;
+  }
+  .content-slide .frame > *{position:relative; z-index:1;}
+  .content-slide h1.display{font-size:96px; margin-top:30px;}
+  .icon-row{display:flex; gap:24px; margin-top:50px; flex-wrap:wrap;}
+  .pill{
+    background:var(--bg2);
+    border:2px solid var(--line);
+    border-radius:100px;
+    padding:18px 34px;
+    font-size:32px;
+    font-weight:700;
+    color:var(--paper);
+  }
+
+  /* list slide */
+  .list-item{
+    display:flex;
+    align-items:flex-start;
+    gap:28px;
+    padding:26px 0;
+    border-bottom:2px solid var(--line);
+  }
+  .list-item:last-child{border-bottom:none;}
+  .list-item .tick{
+    width:50px;height:50px;
+    border-radius:50%;
+    background:var(--lift);
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:30px;
+    color:var(--bg);
+    margin-top:6px;
+  }
+  .list-item .txt{font-size:38px; font-weight:600; line-height:1.3;}
+
+  /* week schedule slide */
+  .week-row{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    padding:22px 0;
+    border-bottom:2px solid var(--line);
+  }
+  .week-row:last-child{border-bottom:none;}
+  .week-day{
+    font-family:'Anton',sans-serif;
+    font-size:42px;
+    width:200px;
+    color:var(--muted);
+  }
+  .week-act{
+    font-size:36px;
+    font-weight:700;
+  }
+  .badge{
+    display:inline-block;
+    font-size:24px;
+    font-weight:800;
+    padding:6px 18px;
+    border-radius:8px;
+    margin-right:14px;
+    text-transform:uppercase;
+  }
+  .badge.run{background:var(--run); color:#1a0c08;}
+  .badge.lift{background:var(--lift); color:#06122e;}
+  .badge.rest{background:var(--bg2); color:var(--muted); border:2px solid var(--line);}
+
+  /* warning slide */
+  #s6{ }
+  #s6 .warn-box{
+    background:var(--bg2);
+    border:3px solid var(--run);
+    border-radius:24px;
+    padding:50px;
+    margin-top:60px;
+  }
+  #s6 .warn-box h2{
+    font-family:'Anton',sans-serif;
+    font-size:64px;
+    color:var(--run);
+    text-transform:uppercase;
+    margin-bottom:24px;
+  }
+
+  /* CTA slide */
+  #s8 .frame{justify-content:center; align-items:flex-start;}
+  #s8 .cta-box{
+    background:linear-gradient(135deg, var(--run), var(--lift));
+    border-radius:32px;
+    padding:60px;
+    color:#0A0B0C;
+    margin-top:50px;
+  }
+  #s8 .cta-box .display{font-size:80px; line-height:1;}
+  #s8 .cta-box p{font-size:38px; font-weight:700; margin-top:24px;}
+  #s8 .question{
+    margin-top:70px;
+    font-size:44px;
+    font-weight:700;
+  }
+  #s8 .question span{color:var(--lift);}
+</style>
+</head>
+<body>
+
+</div>
+<!-- SLIDE 1 — CAPA -->
+<div class="slide-wrap">
+<div class="slide" id="s1">
+  <div class="frame">
+    <div class="eyebrow"><span class="dot run"></span> TREINO HÍBRIDO</div>
+    <h1 class="display bigword accent-run" style="margin-top:50px;">CORRIDA</h1>
+    <div class="plus">+</div>
+    <h1 class="display bigword accent-lift">MUSCULAÇÃO</h1>
+    <div class="sub">Vale a pena treinar os dois juntos?</div>
+  </div>
+  <div class="swipe">ARRASTA PRA CIMA <div class="arrow"></div></div>
+</div>
+
+</div>
+<!-- SLIDE 2 — O QUE É -->
+<div class="slide-wrap">
+<div class="slide content-slide" id="s2">
+  <div class="num">01</div>
+  <div class="frame">
+    <div class="eyebrow"><span class="dot run"></span><span class="dot lift"></span> O CONCEITO</div>
+    <h1 class="display">O QUE É<br>TREINO<br>HÍBRIDO?</h1>
+    <div class="divider"></div>
+    <p class="body-text">Desenvolver duas ou mais capacidades físicas ao mesmo tempo — em vez de focar só em uma.</p>
+    <div class="icon-row">
+      <div class="pill" style="border-color:var(--run); color:var(--run);">🏃 Corrida = condicionamento</div>
+      <div class="pill" style="border-color:var(--lift); color:var(--lift);">💪 Musculação = força</div>
+    </div>
+  </div>
+</div>
+
+</div>
+<!-- SLIDE 3 — BENEFÍCIO 1 -->
+<div class="slide-wrap">
+<div class="slide content-slide" id="s3">
+  <div class="num">02</div>
+  <div class="frame">
+    <div class="eyebrow"><span class="dot lift"></span> BENEFÍCIO</div>
+    <h1 class="display midword">MENOS RISCO<br>DE <span class="accent-lift">LESÃO</span></h1>
+    <div class="divider"></div>
+    <p class="body-text">Musculação fortalece glúteos, quadríceps, posteriores, panturrilhas e core.</p>
+    <p class="body-text muted" style="margin-top:20px;">Isso protege joelhos e tornozelos durante a corrida.</p>
+  </div>
+</div>
+
+</div>
+<!-- SLIDE 4 — BENEFÍCIO 2 -->
+<div class="slide-wrap">
+<div class="slide content-slide" id="s4">
+  <div class="num">03</div>
+  <div class="frame">
+    <div class="eyebrow"><span class="dot run"></span> BENEFÍCIO</div>
+    <h1 class="display midword">VOCÊ CORRE<br><span class="accent-run">MELHOR</span></h1>
+    <div class="divider"></div>
+    <div class="list-item"><div class="tick" style="background:var(--run);">✓</div><div class="txt">Melhor economia de corrida</div></div>
+    <div class="list-item"><div class="tick" style="background:var(--run);">✓</div><div class="txt">Mais potência em subidas</div></div>
+    <div class="list-item"><div class="tick" style="background:var(--run);">✓</div><div class="txt">Sprint final mais forte</div></div>
+    <div class="list-item"><div class="tick" style="background:var(--run);">✓</div><div class="txt">Menos fadiga muscular</div></div>
+  </div>
+</div>
+
+</div>
+<!-- SLIDE 5 — BENEFÍCIO 3 -->
+<div class="slide-wrap">
+<div class="slide content-slide" id="s5">
+  <div class="num">04</div>
+  <div class="frame">
+    <div class="eyebrow"><span class="dot lift"></span> BENEFÍCIO</div>
+    <h1 class="display midword">PRESERVA<br><span class="accent-lift">MASSA MUSCULAR</span></h1>
+    <div class="divider"></div>
+    <p class="body-text">Quem só corre tende a perder músculo com o tempo.</p>
+    <p class="body-text" style="margin-top:20px;">A musculação ajuda a manter — e até aumentar — a massa magra.</p>
+    <div class="icon-row">
+      <div class="pill">⚡ Mais saúde metabólica</div>
+      <div class="pill">🦴 Mais densidade óssea</div>
+    </div>
+  </div>
+</div>
+
+</div>
+<!-- SLIDE 6 — ATENÇÃO / EFEITO INTERFERÊNCIA -->
+<div class="slide-wrap">
+<div class="slide" id="s6">
+  <div class="frame">
+    <div class="eyebrow"><span class="dot run"></span><span class="dot lift"></span> FIQUE ATENTO</div>
+    <h1 class="display" style="font-size:90px; margin-top:30px;">NEM TUDO<br>SÃO FLORES</h1>
+    <div class="warn-box">
+      <h2>⚠️ Efeito interferência</h2>
+      <p class="body-text">Muito volume de corrida pode atrapalhar os ganhos de força. Treino de perna pesado pode prejudicar a qualidade da corrida.</p>
+    </div>
+    <p class="body-text muted" style="margin-top:40px;">Acontece quando há excesso de volume, recuperação insuficiente ou alimentação e sono desalinhados com a carga de treino.</p>
+  </div>
+</div>
+
+</div>
+<!-- SLIDE 7 — SEMANA EXEMPLO -->
+<div class="slide-wrap">
+<div class="slide content-slide" id="s7">
+  <div class="frame">
+    <div class="eyebrow"><span class="dot run"></span><span class="dot lift"></span> NA PRÁTICA</div>
+    <h1 class="display" style="font-size:80px; margin-top:20px;">EXEMPLO DE<br>SEMANA HÍBRIDA</h1>
+    <div class="divider"></div>
+    <div class="week-row"><div class="week-day">SEG</div><div class="week-act"><span class="badge lift">MUSC</span>Membros inferiores</div></div>
+    <div class="week-row"><div class="week-day">TER</div><div class="week-act"><span class="badge run">CORRIDA</span>Leve</div></div>
+    <div class="week-row"><div class="week-day">QUA</div><div class="week-act"><span class="badge lift">MUSC</span>Membros superiores</div></div>
+    <div class="week-row"><div class="week-day">QUI</div><div class="week-act"><span class="badge run">CORRIDA</span>Velocidade</div></div>
+    <div class="week-row"><div class="week-day">SEX</div><div class="week-act"><span class="badge lift">MUSC</span>Corpo inteiro</div></div>
+    <div class="week-row"><div class="week-day">SÁB</div><div class="week-act"><span class="badge run">CORRIDA</span>Longa</div></div>
+    <div class="week-row"><div class="week-day">DOM</div><div class="week-act"><span class="badge rest">DESCANSO</span>Recuperação ativa</div></div>
+  </div>
+</div>
+
+</div>
+<!-- SLIDE 8 — CTA -->
+<div class="slide-wrap">
+<div class="slide" id="s8">
+  <div class="frame">
+    <div class="eyebrow"><span class="dot run"></span><span class="dot lift"></span> RESUMO</div>
+    <h1 class="display" style="font-size:90px; margin-top:20px;">FORÇA +<br>CONDICIONAMENTO<br>= RESULTADO</h1>
+    <div class="cta-box">
+      <div class="display">SALVA ESSE POST</div>
+      <p>Pra montar seu treino híbrido essa semana 🙌</p>
+    </div>
+    <div class="question">Comenta aí: você já treina <span>corrida + musculação</span>?</div>
+  </div>
+</div>
+
+</div>
+<script>
+  function rescale(){
+    document.querySelectorAll('.slide-wrap').forEach(function(wrap){
+      var slide = wrap.querySelector('.slide');
+      var scale = wrap.clientWidth / 1080;
+      slide.style.transform = 'scale(' + scale + ')';
+    });
+  }
+  window.addEventListener('resize', rescale);
+  window.addEventListener('load', rescale);
+  rescale();
+</script>
+</body>
+</html>
