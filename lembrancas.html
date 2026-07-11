@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Confiança e Estabilidade em Deus</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+:root{
+    --cor:#7b5757;
+    --cor2:#a27b7b;
+    --bg:#f6f3f2;
+    --texto:#2d2d2d;
+    --card:#ffffff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:linear-gradient(180deg,#efe9e8,var(--bg));
+    color:var(--texto);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    width:min(900px,100%);
+    background:var(--card);
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+    border:1px solid rgba(123,87,87,.15);
+}
+
+header{
+    background:linear-gradient(135deg,#7b5757,#5f4343);
+    color:#fff;
+    text-align:center;
+    padding:40px 25px;
+}
+
+header i{
+    font-size:48px;
+    margin-bottom:15px;
+}
+
+header h1{
+    font-family:'Merriweather',serif;
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    margin-bottom:10px;
+}
+
+header p{
+    opacity:.9;
+}
+
+main{
+    padding:30px 22px;
+}
+
+.card{
+    display:flex;
+    gap:18px;
+    margin-bottom:22px;
+    padding:20px;
+    border-left:5px solid var(--cor);
+    background:#faf8f8;
+    border-radius:16px;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(123,87,87,.12);
+}
+
+.icon{
+    width:58px;
+    height:58px;
+    flex-shrink:0;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:var(--cor);
+    color:#fff;
+    font-size:22px;
+}
+
+h2{
+    color:var(--cor);
+    font-size:1.15rem;
+    margin-bottom:8px;
+}
+
+p{
+    line-height:1.8;
+    font-size:1rem;
+}
+
+footer{
+    padding:25px;
+    text-align:center;
+    background:#f2ecec;
+}
+
+button{
+    border:none;
+    background:var(--cor);
+    color:#fff;
+    padding:12px 26px;
+    border-radius:50px;
+    cursor:pointer;
+    font-size:1rem;
+    transition:.3s;
+}
+
+button:hover{
+    background:#624545;
+}
+
+.frase{
+    margin-top:18px;
+    color:var(--cor);
+    font-style:italic;
+    display:none;
+    animation:fade .5s;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:650px){
+
+.card{
+    flex-direction:column;
+    text-align:center;
+    align-items:center;
+}
+
+.icon{
+    margin-bottom:8px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<header>
+<i class="fa-solid fa-cross"></i>
+<h1>Confiança e Estabilidade em Deus</h1>
+<p>Esperança, renovação e paz segundo as Escrituras.</p>
+</header>
+
+<main>
+
+<div class="card">
+<div class="icon">
+<i class="fa-solid fa-hands-praying"></i>
+</div>
+
+<div>
+<h2>Confiança em Deus</h2>
+
+<p>
+Em momentos de ansiedade ou angústia, a orientação é lançar todas as preocupações sobre Deus, pois Ele cuida de nós (<strong>1 Pedro 5:7</strong>). A oração é fundamental para buscar clareza e orientação divina.
+</p>
+</div>
+</div>
+
+<div class="card">
+<div class="icon">
+<i class="fa-solid fa-brain"></i>
+</div>
+
+<div>
+<h2>Renovação da Mente</h2>
+
+<p>
+<strong>Romanos 12:2</strong> fala sobre a importância de não se conformar com este mundo, mas de ser transformado pela renovação da mente. Isso envolve alinhar pensamentos e sentimentos com a verdade de Deus.
+</p>
+</div>
+</div>
+
+<div class="card">
+<div class="icon">
+<i class="fa-solid fa-dove"></i>
+</div>
+
+<div>
+<h2>Estabilidade em Cristo</h2>
+
+<p>
+A verdadeira paz e estabilidade emocional vêm de uma fé firme em Jesus e da submissão ao Espírito Santo, e não da ausência de desafios emocionais.
+</p>
+</div>
+</div>
+
+</main>
+
+<footer>
+
+<button onclick="mostrarMensagem()">
+<i class="fa-solid fa-book-bible"></i>
+ Versículo Inspirador
+</button>
+
+<p class="frase" id="mensagem">
+"Tu conservarás em perfeita paz aquele cujo propósito está firme, porque ele confia em ti." — <strong>Isaías 26:3</strong>
+</p>
+
+</footer>
+
+</div>
+
+<script>
+function mostrarMensagem(){
+    const msg=document.getElementById("mensagem");
+
+    if(msg.style.display==="block"){
+        msg.style.display="none";
+    }else{
+        msg.style.display="block";
+        msg.scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+    }
+}
+</script>
+
+</body>
+</html>
