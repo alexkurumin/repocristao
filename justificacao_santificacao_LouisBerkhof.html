@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Justificação & Santificação — Berkhof</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+  :root{
+    --ink:#0a0806;
+    --ink-deep:#050403;
+    --parchment:#e9e1cd;
+    --parchment-dim:#a89d84;
+    --hairline: rgba(233,225,205,0.14);
+    --gold:#c9a24d;
+    --gold-dim: rgba(201,162,77,0.35);
+    --ember:#9a3a26;
+    --ember-dim: rgba(154,58,38,0.35);
+    --accent: var(--parchment-dim);
+    --accent-strong: var(--parchment);
+    --accent-glow: rgba(233,225,205,0.18);
+    --dur: 5500ms;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0; height:100%;
+    background: var(--ink-deep);
+    font-family:'EB Garamond', serif;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior:none;
+  }
+
+  body{
+    display:flex; align-items:center; justify-content:center;
+    min-height:100vh;
+    color:var(--parchment);
+  }
+
+  /* ambient backdrop behind the phone frame */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(201,162,77,0.05), transparent 60%),
+      var(--ink-deep);
+    z-index:-1;
+  }
+
+  .stage-wrap{
+    position:relative;
+    width:min(420px, 100vw);
+    height:min(93vh, 932px);
+    aspect-ratio: 9/16;
+  }
+
+  .stage{
+    position:relative;
+    width:100%; height:100%;
+    overflow:hidden;
+    background: radial-gradient(140% 100% at 50% 0%, #171310 0%, var(--ink) 45%, var(--ink-deep) 100%);
+    border-radius:22px;
+    box-shadow: 0 40px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(233,225,205,0.06);
+    transition: background 900ms ease;
+    user-select:none;
+  }
+
+  /* grain */
+  .grain{
+    position:absolute; inset:-10%;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");
+    opacity:0.05;
+    mix-blend-mode:overlay;
+    pointer-events:none;
+    z-index:5;
+  }
+
+  .vignette{
+    position:absolute; inset:0;
+    background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgba(0,0,0,0.55) 100%);
+    pointer-events:none;
+    z-index:6;
+    animation: breathe 7s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%,100%{ opacity:1; }
+    50%{ opacity:0.82; }
+  }
+
+  /* embers */
+  .embers{ position:absolute; inset:0; overflow:hidden; z-index:4; pointer-events:none; }
+  .ember{
+    position:absolute;
+    bottom:-5%;
+    width:3px; height:3px;
+    border-radius:50%;
+    background: var(--accent-strong);
+    box-shadow: 0 0 6px 1px var(--accent-glow);
+    opacity:0;
+    animation-name: rise;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+    transition: background 900ms ease, box-shadow 900ms ease;
+  }
+  @keyframes rise{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    8%{ opacity:0.85; }
+    92%{ opacity:0.25; }
+    100%{ transform:translateY(-115%) translateX(var(--drift,10px)); opacity:0; }
+  }
+
+  /* progress bar */
+  .progress-row{
+    position:absolute; top:14px; left:14px; right:14px;
+    display:flex; gap:5px;
+    z-index:20;
+  }
+  .segment{
+    flex:1; height:2.5px; border-radius:2px;
+    background: rgba(233,225,205,0.18);
+    overflow:hidden;
+  }
+  .segment .fill{
+    height:100%; width:0%;
+    background: var(--accent-strong);
+    box-shadow: 0 0 8px var(--accent-glow);
+    transition: background 600ms ease, box-shadow 600ms ease;
+  }
+
+  /* header */
+  .header-row{
+    position:absolute; top:26px; left:16px; right:16px;
+    display:flex; align-items:center; gap:10px;
+    z-index:20;
+  }
+  .emblem{
+    width:26px; height:26px; border-radius:50%;
+    border:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(233,225,205,0.03);
+    flex-shrink:0;
+  }
+  .emblem svg{ width:13px; height:13px; }
+  .header-text{ line-height:1.15; }
+  .header-title{
+    font-family:'EB Garamond', serif;
+    font-size:12.5px; letter-spacing:0.03em;
+    color: var(--parchment);
+    font-weight:600;
+  }
+  .header-sub{
+    font-size:10.5px; color:var(--parchment-dim);
+    letter-spacing:0.02em;
+  }
+
+  /* slides */
+  .slides{ position:relative; width:100%; height:100%; }
+  .slide{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; justify-content:center;
+    padding: 92px 30px 70px;
+    opacity:0; visibility:hidden;
+    transform: translateY(6px);
+    transition: opacity 500ms ease, transform 600ms ease;
+    z-index:1;
+  }
+  .slide.active{
+    opacity:1; visibility:visible; transform:translateY(0);
+    z-index:2;
+  }
+
+  .eyebrow{
+    font-family:'EB Garamond', serif;
+    font-size:11.5px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color: var(--accent-strong);
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:8px;
+    transition: color 700ms ease;
+  }
+  .eyebrow::before{
+    content:'';
+    width:16px; height:1px;
+    background: var(--accent-strong);
+    display:inline-block;
+    transition: background 700ms ease;
+  }
+
+  .display{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:500;
+    font-style:italic;
+    font-size: 30px;
+    line-height:1.28;
+    color: var(--parchment);
+    margin:0 0 22px;
+    letter-spacing:0.001em;
+  }
+
+  .body-text{
+    font-family:'EB Garamond', serif;
+    font-size:16.5px;
+    line-height:1.62;
+    color: var(--parchment-dim);
+    max-width: 30ch;
+  }
+
+  .footer-line{
+    position:absolute; bottom:26px; left:30px; right:30px;
+    font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
+    color: rgba(168,157,132,0.55);
+    display:flex; justify-content:space-between;
+    z-index:20;
+  }
+
+  /* divider slides */
+  .slide.divider{ align-items:center; text-align:center; padding-left:30px; padding-right:30px; }
+  .divider .roman{
+    font-family:'Fraunces', serif;
+    font-weight:300;
+    font-size:70px;
+    color: var(--accent-strong);
+    line-height:1;
+    margin-bottom:10px;
+    transition: color 700ms ease;
+  }
+  .divider .title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:26px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--parchment);
+    margin-bottom:14px;
+  }
+  .divider .rule{
+    width:40px; height:1px;
+    background: var(--accent-strong);
+    margin: 0 auto 14px;
+    transition: background 700ms ease;
+  }
+  .divider .tagline{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--parchment-dim);
+  }
+
+  /* cover / closing */
+  .slide.cover, .slide.closing{ align-items:center; text-align:center; }
+  .cover .kicker, .closing .kicker{
+    font-size:11px; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--parchment-dim); margin-bottom:20px;
+  }
+  .cover .title, .closing .title{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:34px;
+    line-height:1.15;
+    color:var(--parchment);
+    margin-bottom:16px;
+  }
+  .cover .author, .closing .author{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--accent-strong);
+    margin-bottom:34px;
+    transition: color 700ms ease;
+  }
+  .cover .hint{
+    position:absolute; bottom:70px; left:30px; right:30px;
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color: rgba(168,157,132,0.5);
+  }
+  .closing .body-text{ max-width:32ch; margin:0 auto; }
+
+  /* controls */
+  .controls{
+    position:absolute; bottom:26px; right:16px;
+    display:flex; align-items:center; gap:10px;
+    z-index:25;
+  }
+  .ctrl-btn{
+    width:34px; height:34px; border-radius:50%;
+    background: rgba(10,8,6,0.55);
+    border:1px solid rgba(233,225,205,0.18);
+    backdrop-filter: blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ctrl-btn svg{ width:13px; height:13px; fill:var(--parchment); }
+  .ctrl-btn:active{ transform:scale(0.92); }
+
+  .tap-zones{
+    position:absolute; inset:0; display:flex; z-index:15;
+  }
+  .tap-zones .zone{ height:100%; }
+  .zone.left{ width:32%; }
+  .zone.right{ width:68%; }
+
+  .paused-badge{
+    position:absolute; top:64px; left:50%; transform:translate(-50%, -6px);
+    font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
+    color: rgba(233,225,205,0.7);
+    background: rgba(10,8,6,0.5);
+    border:1px solid rgba(233,225,205,0.15);
+    padding:5px 11px; border-radius:20px;
+    opacity:0; pointer-events:none;
+    transition: opacity 250ms ease, transform 250ms ease;
+    z-index:25;
+    backdrop-filter: blur(4px);
+  }
+  .paused-badge.show{ opacity:1; transform:translate(-50%,0); }
+
+  @media (max-width: 480px){
+    .stage-wrap{ width:100vw; height:100vh; height:100dvh; }
+    .stage{ border-radius:0; box-shadow:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ember{ animation: none; opacity:0; }
+    .vignette{ animation:none; }
+    .slide{ transition:opacity 200ms linear; transform:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage-wrap">
+  <div class="stage" id="stage">
+
+    <div class="grain"></div>
+    <div class="vignette"></div>
+    <div class="embers" id="embers"></div>
+
+    <div class="progress-row" id="progressRow"></div>
+
+    <div class="header-row">
+      <div class="emblem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="color:var(--parchment)">
+          <path d="M12 2c1.2 2 1.4 3.6 0.4 5.2C11 8.8 10.6 10 12 12c1.4-2 1-3.2-0.4-4.8C10.6 5.6 10.8 4 12 2Z"/>
+          <path d="M8 21c0-4.5 1.8-7 4-7s4 2.5 4 7"/>
+          <path d="M6 21h12"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <div class="header-title">Teologia Sistemática</div>
+        <div class="header-sub">Louis Berkhof</div>
+      </div>
+    </div>
+
+    <div class="paused-badge" id="pausedBadge">pausado</div>
+
+    <div class="slides" id="slides">
+
+      <!-- 0: cover -->
+      <div class="slide cover active" data-section="neutral" data-duration="4200">
+        <div class="kicker">Duas obras da graça</div>
+        <div class="title">Santificação<br>&amp; Justificação</div>
+        <div class="author">segundo Louis Berkhoff</div>
+        <div class="hint">toque para avançar · segure para pausar</div>
+      </div>
+
+      <!-- 1: divider I -->
+      <div class="slide divider" data-section="justificacao" data-duration="3600">
+        <div class="roman">I</div>
+        <div class="title">Justificação</div>
+        <div class="rule"></div>
+        <div class="tagline">um veredito — não um processo</div>
+      </div>
+
+      <!-- 2 -->
+      <div class="slide" data-section="justificacao" data-duration="5600">
+        <div class="eyebrow">I · Justificação</div>
+        <p class="display">Um ato judicial e instantâneo de Deus.</p>
+        <p class="body-text">Ele declara o pecador justo — não com base em seus próprios méritos, mas imputando-lhe a justiça perfeita de Cristo.</p>
+      </div>
+
+      <!-- 3 -->
+      <div class="slide" data-section="justificacao" data-duration="5600">
+        <div class="eyebrow">I · Justificação</div>
+        <p class="display">Uma nova posição legal diante de Deus.</p>
+        <p class="body-text">A culpa é removida. A condenação é cancelada — de uma vez por todas.</p>
+      </div>
+
+      <!-- 4 -->
+      <div class="slide" data-section="justificacao" data-duration="5800">
+        <div class="eyebrow">I · Justificação</div>
+        <p class="display">Um veredito que vem de fora do homem.</p>
+        <p class="body-text">Acontece no tribunal celestial. Não muda, neste instante, a natureza íntima da pessoa.</p>
+      </div>
+
+      <!-- 5: divider II -->
+      <div class="slide divider" data-section="santificacao" data-duration="3600">
+        <div class="roman">II</div>
+        <div class="title">Santificação</div>
+        <div class="rule"></div>
+        <div class="tagline">um processo — não um instante</div>
+      </div>
+
+      <!-- 6 -->
+      <div class="slide" data-section="santificacao" data-duration="5600">
+        <div class="eyebrow">II · Santificação</div>
+        <p class="display">Uma obra contínua e progressiva.</p>
+        <p class="body-text">Deus opera na alma do crente, purificando-o do poder do pecado e transformando-o moralmente.</p>
+      </div>
+
+      <!-- 7 -->
+      <div class="slide" data-section="santificacao" data-duration="5600">
+        <div class="eyebrow">II · Santificação</div>
+        <p class="display">O crescimento na semelhança de Cristo.</p>
+        <p class="body-text">Fortalece, na prática, a disposição santa que já foi iniciada na regeneração.</p>
+      </div>
+
+      <!-- 8 -->
+      <div class="slide" data-section="santificacao" data-duration="6000">
+        <div class="eyebrow">II · Santificação</div>
+        <p class="display">Uma obra que ocorre dentro do homem.</p>
+        <p class="body-text">Transforma intelecto, afetos, vontade, corpo e alma. Mesmo contínua, nunca alcança a perfeição absoluta nesta vida.</p>
+      </div>
+
+      <!-- 9: closing -->
+      <div class="slide closing" data-section="neutral" data-duration="6400">
+        <div class="kicker">Em síntese</div>
+        <div class="title">Um veredito.<br>Um caminho.</div>
+        <p class="body-text">A justificação declara; a santificação transforma. Uma acontece por fora, de uma vez — a outra, por dentro, pouco a pouco.</p>
+      </div>
+
+    </div>
+
+    <div class="tap-zones" id="tapZones">
+      <div class="zone left" data-nav="prev"></div>
+      <div class="zone right" data-nav="next"></div>
+    </div>
+
+    <div class="controls">
+      <div class="ctrl-btn" id="playPauseBtn" aria-label="Pausar ou retomar">
+        <svg id="iconPause" viewBox="0 0 24 24"><rect x="5" y="4" width="4.5" height="16" rx="1"/><rect x="14.5" y="4" width="4.5" height="16" rx="1"/></svg>
+        <svg id="iconPlay" viewBox="0 0 24 24" style="display:none"><path d="M6 4l15 8-15 8V4z"/></svg>
+      </div>
+    </div>
+
+    <div class="footer-line">
+      <span id="slideCounter">1 / 10</span>
+      <span>Berkhoff · Teologia Sistemática</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const stage = document.getElementById('stage');
+  const slideEls = Array.from(document.querySelectorAll('.slide'));
+  const total = slideEls.length;
+  const progressRow = document.getElementById('progressRow');
+  const counter = document.getElementById('slideCounter');
+  const pausedBadge = document.getElementById('pausedBadge');
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const iconPause = document.getElementById('iconPause');
+  const iconPlay = document.getElementById('iconPlay');
+  const embersLayer = document.getElementById('embers');
+
+  const accentMap = {
+    neutral:  { strong:'#e9e1cd', glow:'rgba(233,225,205,0.20)' },
+    justificacao: { strong:'#c9a24d', glow:'rgba(201,162,77,0.35)' },
+    santificacao: { strong:'#b0503a', glow:'rgba(176,80,58,0.35)' }
+  };
+
+  // build progress segments
+  const fills = [];
+  slideEls.forEach(() => {
+    const seg = document.createElement('div');
+    seg.className = 'segment';
+    const fill = document.createElement('div');
+    fill.className = 'fill';
+    seg.appendChild(fill);
+    progressRow.appendChild(seg);
+    fills.push(fill);
+  });
+
+  // build embers (created once, recolored via CSS var updates)
+  const EMBER_COUNT = 14;
+  const emberEls = [];
+  for (let i = 0; i < EMBER_COUNT; i++){
+    const e = document.createElement('div');
+    e.className = 'ember';
+    const left = Math.random() * 100;
+    const dur = 6 + Math.random() * 6;
+    const delay = Math.random() * 8;
+    const size = 2 + Math.random() * 2.5;
+    const drift = (Math.random() * 40 - 20) + 'px';
+    e.style.left = left + '%';
+    e.style.width = size + 'px';
+    e.style.height = size + 'px';
+    e.style.setProperty('--drift', drift);
+    e.style.animationDuration = dur + 's';
+    e.style.animationDelay = delay + 's';
+    embersLayer.appendChild(e);
+    emberEls.push(e);
+  }
+
+  let current = 0;
+  let elapsed = 0;
+  let lastTime = null;
+  let manualPause = false;
+  let holdPause = false;
+  let rafId = null;
+  let holdTimer = null;
+  let downX = 0;
+  let holding = false;
+
+  function effectivePaused(){ return manualPause || holdPause; }
+
+  function applyAccent(section){
+    const a = accentMap[section] || accentMap.neutral;
+    stage.style.setProperty('--accent-strong', a.strong);
+    stage.style.setProperty('--accent-glow', a.glow);
+  }
+
+  function setActiveSlide(index){
+    slideEls.forEach((s, i) => s.classList.toggle('active', i === index));
+    counter.textContent = (index + 1) + ' / ' + total;
+    applyAccent(slideEls[index].dataset.section);
+  }
+
+  function setFillsForIndex(index, fraction){
+    fills.forEach((f, i) => {
+      if (i < index) f.style.width = '100%';
+      else if (i === index) f.style.width = (fraction * 100) + '%';
+      else f.style.width = '0%';
+    });
+  }
+
+  function goTo(index, resetOnly){
+    current = ((index % total) + total) % total;
+    elapsed = 0;
+    lastTime = null;
+    setActiveSlide(current);
+    setFillsForIndex(current, 0);
+  }
+
+  function next(){ goTo(current + 1); }
+  function prev(){ goTo(current - 1); }
+
+  function tick(ts){
+    if (lastTime === null) lastTime = ts;
+    const dt = ts - lastTime;
+    lastTime = ts;
+
+    if (!effectivePaused()){
+      elapsed += dt;
+      const duration = parseFloat(slideEls[current].dataset.duration) || 5000;
+      const frac = Math.min(elapsed / duration, 1);
+      setFillsForIndex(current, frac);
+      if (elapsed >= duration){
+        next();
+      }
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function updatePauseUI(){
+    const paused = effectivePaused();
+    pausedBadge.classList.toggle('show', paused);
+    iconPause.style.display = paused ? 'none' : '';
+    iconPlay.style.display = paused ? '' : 'none';
+  }
+
+  playPauseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    manualPause = !manualPause;
+    updatePauseUI();
+  });
+
+  const tapZones = document.getElementById('tapZones');
+
+  tapZones.addEventListener('pointerdown', (e) => {
+    downX = e.clientX;
+    holding = false;
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(() => {
+      holding = true;
+      holdPause = true;
+      updatePauseUI();
+    }, 180);
+  });
+
+  function releaseHold(){
+    clearTimeout(holdTimer);
+    if (holding){
+      holding = false;
+      holdPause = false;
+      updatePauseUI();
+    }
+  }
+
+  tapZones.addEventListener('pointerup', (e) => {
+    if (holding){
+      releaseHold();
+      return;
+    }
+    clearTimeout(holdTimer);
+    const rect = stage.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width;
+    if (relX < 0.32) prev(); else next();
+  });
+
+  tapZones.addEventListener('pointerleave', releaseHold);
+  tapZones.addEventListener('pointercancel', releaseHold);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'ArrowRight') next();
+    else if (e.code === 'ArrowLeft') prev();
+    else if (e.code === 'Space'){
+      e.preventDefault();
+      manualPause = !manualPause;
+      updatePauseUI();
+    }
+  });
+
+  setActiveSlide(current);
+  setFillsForIndex(current, 0);
+  rafId = requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>
