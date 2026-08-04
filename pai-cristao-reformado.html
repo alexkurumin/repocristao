@@ -433,6 +433,15 @@
     color:var(--stone-1);
   }
 
+  #fxCanvas{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    pointer-events:none;
+    z-index:100;
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; animation:none !important; }
   }
@@ -444,6 +453,8 @@
 </style>
 </head>
 <body>
+
+<canvas id="fxCanvas" aria-hidden="true"></canvas>
 
 <div class="page">
   <header>
@@ -525,6 +536,202 @@
     {n:30, title:"Homem de Esperança Escatológica", section:"Caráter que Sustenta as Duas Esferas", text:"Lidera a família e serve a igreja com os olhos na eternidade e na vitória final de Cristo, não no desespero deste mundo.", verse:""}
   ];
 
+  // ============ SOUND (synth click, no external files) ============
+  let audioCtx = null;
+  function getAudioCtx(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(AC) audioCtx = new AC();
+    }
+    return audioCtx;
+  }
+  function playClick(){
+    try{
+      const ctx = getAudioCtx();
+      if(!ctx) return;
+      if(ctx.state === 'suspended') ctx.resume();
+      const now = ctx.currentTime;
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(920, now);
+      o.frequency.exponentialRampToValueAtTime(340, now + 0.09);
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.exponentialRampToValueAtTime(0.18, now + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(now); o.stop(now + 0.16);
+    }catch(e){ /* audio not available, ignore */ }
+  }
+
+  // ============ PARTICLE FX (sparkles, confetti streamers, fireworks) ============
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fxCanvas = document.getElementById('fxCanvas');
+  const fxCtx = fxCanvas.getContext('2d');
+  let particles = [];
+  let fxAnimating = false;
+  const FX_COLORS = ['#e9c85c','#c9a227','#9a2c39','#6e1b26','#f4ecd8','#efd9a0'];
+
+  function resizeFx(){
+    const dpr = window.devicePixelRatio || 1;
+    fxCanvas.width = window.innerWidth * dpr;
+    fxCanvas.height = window.innerHeight * dpr;
+    fxCtx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resizeFx();
+  window.addEventListener('resize', resizeFx);
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  function spawnStar(x,y){
+    particles.push({
+      type:'star', x, y,
+      vx:rand(-40,40), vy:rand(-90,-20),
+      gravity:60, life:1, maxLife:rand(.6,1.1),
+      size:rand(5,10), color: pick(['#f4ecd8','#e9c85c','#efd9a0']),
+      rot:rand(0,Math.PI*2), rotSpeed:rand(-4,4)
+    });
+  }
+
+  function spawnConfetti(x,y){
+    particles.push({
+      type:'confetti', x, y,
+      vx:rand(-160,160), vy:rand(-260,-90),
+      gravity:220, life:1, maxLife:rand(1.1,1.8),
+      w:rand(4,7), h:rand(8,14), color: pick(FX_COLORS),
+      rot:rand(0,Math.PI*2), rotSpeed:rand(-8,8),
+      drag:0.985
+    });
+  }
+
+  function spawnSpark(x,y,angle,speed,color){
+    particles.push({
+      type:'spark', x, y,
+      vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed,
+      gravity:70, life:1, maxLife:rand(.7,1.15),
+      size:rand(2,3.4), color, trail:[]
+    });
+  }
+
+  function ensureFxAnimating(){
+    if(!fxAnimating){
+      fxAnimating = true;
+      lastTs = null;
+      requestAnimationFrame(fxTick);
+    }
+  }
+
+  let lastTs = null;
+  function fxTick(ts){
+    if(lastTs === null) lastTs = ts;
+    const dt = Math.min((ts - lastTs) / 1000, 0.05);
+    lastTs = ts;
+
+    fxCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
+
+    particles.forEach(p=>{
+      p.life -= dt / p.maxLife;
+      p.vy += p.gravity * dt;
+      if(p.drag){ p.vx *= p.drag; p.vy *= p.drag; }
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      const alpha = Math.max(p.life, 0);
+
+      if(p.type === 'star'){
+        p.rot += p.rotSpeed * dt;
+        fxCtx.save();
+        fxCtx.translate(p.x, p.y);
+        fxCtx.rotate(p.rot);
+        fxCtx.globalAlpha = alpha;
+        fxCtx.strokeStyle = p.color;
+        fxCtx.lineWidth = 1.6;
+        fxCtx.shadowColor = p.color;
+        fxCtx.shadowBlur = 6;
+        const s = p.size;
+        fxCtx.beginPath();
+        fxCtx.moveTo(-s,0); fxCtx.lineTo(s,0);
+        fxCtx.moveTo(0,-s); fxCtx.lineTo(0,s);
+        fxCtx.moveTo(-s*0.6,-s*0.6); fxCtx.lineTo(s*0.6,s*0.6);
+        fxCtx.moveTo(-s*0.6,s*0.6); fxCtx.lineTo(s*0.6,-s*0.6);
+        fxCtx.stroke();
+        fxCtx.restore();
+      } else if(p.type === 'confetti'){
+        p.rot += p.rotSpeed * dt;
+        fxCtx.save();
+        fxCtx.translate(p.x, p.y);
+        fxCtx.rotate(p.rot);
+        fxCtx.globalAlpha = alpha;
+        fxCtx.fillStyle = p.color;
+        fxCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        fxCtx.restore();
+      } else if(p.type === 'spark'){
+        p.trail.push({x:p.x, y:p.y});
+        if(p.trail.length > 6) p.trail.shift();
+        fxCtx.save();
+        fxCtx.globalAlpha = alpha;
+        fxCtx.strokeStyle = p.color;
+        fxCtx.shadowColor = p.color;
+        fxCtx.shadowBlur = 8;
+        fxCtx.lineWidth = 2;
+        fxCtx.beginPath();
+        p.trail.forEach((pt,i)=>{ i===0 ? fxCtx.moveTo(pt.x,pt.y) : fxCtx.lineTo(pt.x,pt.y); });
+        fxCtx.lineTo(p.x,p.y);
+        fxCtx.stroke();
+        fxCtx.beginPath();
+        fxCtx.fillStyle = p.color;
+        fxCtx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        fxCtx.fill();
+        fxCtx.restore();
+      }
+    });
+
+    particles = particles.filter(p => p.life > 0);
+    if(particles.length > 0){
+      requestAnimationFrame(fxTick);
+    } else {
+      fxAnimating = false;
+    }
+  }
+
+  function celebrate(x, y){
+    if(reduceMotion) return;
+    for(let i=0;i<14;i++) spawnStar(x + rand(-16,16), y + rand(-10,10));
+    for(let i=0;i<16;i++) spawnConfetti(x + rand(-20,20), y + rand(-10,10));
+    ensureFxAnimating();
+  }
+
+  function fireworkBurst(x, y){
+    if(reduceMotion) return;
+    const color = pick(FX_COLORS);
+    const count = 34;
+    for(let i=0;i<count;i++){
+      const angle = (Math.PI*2 * i / count) + rand(-.08,.08);
+      const speed = rand(90,220);
+      spawnSpark(x, y, angle, speed, color);
+    }
+    // a few lingering stars in the same burst for sparkle
+    for(let i=0;i<8;i++) spawnStar(x + rand(-10,10), y + rand(-10,10));
+    ensureFxAnimating();
+  }
+
+  function launchFireworksShow(rect){
+    if(reduceMotion) return;
+    const originX = rect.left + rect.width/2;
+    const originY = rect.top + rect.height*0.35;
+    const spread = Math.min(rect.width, 420);
+    let delay = 0;
+    for(let i=0;i<7;i++){
+      delay += rand(150, 380);
+      setTimeout(()=>{
+        fireworkBurst(
+          originX + rand(-spread/2, spread/2),
+          originY + rand(-rect.height*0.18, rect.height*0.22)
+        );
+      }, delay);
+    }
+  }
+
   const tablet = document.getElementById('tablet');
   const overlay = document.getElementById('overlay');
   const finale = document.getElementById('finale');
@@ -577,6 +784,10 @@
     orderMark.textContent = toRoman(activatedCount);
     updateProgress();
 
+    playClick();
+    const rect = btn.getBoundingClientRect();
+    celebrate(rect.left + rect.width/2, rect.top + rect.height/2);
+
     const data = messages[activatedCount-1];
     cardGlyph.textContent = symbols[cells.indexOf(btn)];
     cardNum.textContent = 'Marca ' + toRoman(data.n) + ' de ' + romanTotal;
@@ -593,7 +804,10 @@
     overlay.classList.remove('show');
     awaitingClose = false;
     if(activatedCount >= 30){
-      setTimeout(()=> finale.classList.add('show'), 250);
+      setTimeout(()=>{
+        finale.classList.add('show');
+        launchFireworksShow(tablet.getBoundingClientRect());
+      }, 250);
     }
   });
 
