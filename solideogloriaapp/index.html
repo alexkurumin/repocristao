@@ -22,12 +22,15 @@
       <div class="brand-text">
         <div class="kicker">Regra de Vida</div>
         <h1>Soli Deo<br>Gloria</h1>
+        <div id="user-name-slot"></div>
       </div>
     </div>
     <nav class="primary-nav" id="nav-list"></nav>
     <div class="sidebar-footer">
       <div id="theme-toggle-slot"></div>
+      <div id="privacy-note-slot"></div>
       <div class="install-hint">Instale este app na tela inicial pelo menu do navegador para uso offline.</div>
+      <button class="toggle-link" id="tour-replay-btn" style="text-align:left;">↻ Rever o tour de boas-vindas</button>
     </div>
   </aside>
 
@@ -38,7 +41,10 @@
       </button>
       <div class="brand" style="gap:8px;">
         <div class="seal" style="width:32px;height:32px;font-size:10px;">SDG</div>
-        <strong style="font-family:var(--font-display); font-size:17px;">Soli Deo Gloria</strong>
+        <div>
+          <strong style="font-family:var(--font-display); font-size:17px; display:block;">Soli Deo Gloria</strong>
+          <div id="user-name-slot-mobile"></div>
+        </div>
       </div>
       <div style="width:38px;"></div>
     </div>
@@ -69,5 +75,6 @@
 
 <script src="./data.js"></script>
 <script src="./app.js"></script>
+<script src="./onboarding.js"></script>
 </body>
 </html>

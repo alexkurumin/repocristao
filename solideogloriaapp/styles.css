@@ -366,3 +366,93 @@ main.view{padding:28px 34px 80px; max-width:980px; margin:0 auto; width:100%;}
 .theme-study h3{font-size:22px; color:var(--burgundy); margin-top:26px;}
 [data-theme="dark"] .theme-study h3{color:var(--burgundy-soft);}
 .theme-study h3:first-child{margin-top:0;}
+
+/* ============================================================
+   MODAL DE BOAS-VINDAS
+   ============================================================ */
+.welcome-overlay{
+  position:fixed; inset:0; z-index:300;
+  background:rgba(20,15,8,.62);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+  animation:fadeIn .25s ease;
+}
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+.welcome-modal{
+  background:var(--surface-raised); border:1px solid var(--border); border-radius:6px;
+  box-shadow: 0 20px 60px -12px rgba(0,0,0,.5);
+  width:100%; max-width:380px; padding:30px 28px 26px;
+  text-align:center;
+  animation:popIn .3s cubic-bezier(.2,.9,.3,1.2);
+}
+@keyframes popIn{ from{opacity:0; transform:translateY(14px) scale(.97);} to{opacity:1; transform:translateY(0) scale(1);} }
+.welcome-seal{
+  width:52px; height:52px; border-radius:50%; margin:0 auto 14px;
+  background: radial-gradient(circle at 32% 28%, var(--burgundy-soft), var(--burgundy) 65%);
+  color:#f4e9c9; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:700; font-size:15px;
+  box-shadow: 0 0 0 2px var(--gold-soft), inset 0 0 0 1px rgba(0,0,0,.25);
+}
+.welcome-greeting{ font-family:var(--font-display); font-weight:700; font-size:23px; margin:0 0 2px; }
+.welcome-question{ font-family:var(--font-ui); font-size:14px; color:var(--ink-soft); margin:0 0 18px; }
+.welcome-input{
+  width:100%; padding:11px 14px; border:1px solid var(--border); border-radius:4px;
+  background:var(--surface); color:var(--ink); font-family:var(--font-ui); font-size:14.5px;
+  outline:none; margin-bottom:18px; text-align:center;
+}
+.welcome-input:focus{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(156,122,46,.15); }
+.welcome-input.shake{ animation:shake .4s ease; border-color:var(--burgundy); }
+@keyframes shake{
+  10%,90%{transform:translateX(-2px);} 20%,80%{transform:translateX(3px);}
+  30%,50%,70%{transform:translateX(-5px);} 40%,60%{transform:translateX(5px);}
+}
+.welcome-buttons{ display:flex; gap:10px; justify-content:center; margin-bottom:14px; }
+.welcome-buttons .btn{ flex:1; padding:10px 0; }
+.welcome-hint{ font-family:var(--font-ui); font-size:11.5px; color:var(--ink-soft); margin:0; }
+
+/* ---------- Nome do usuário em destaque ---------- */
+.user-badge{
+  font-family:var(--font-ui); font-size:12.5px; color:var(--gold); font-weight:700;
+  margin-top:6px; display:flex; align-items:center; gap:5px;
+}
+.user-badge strong{ color:var(--burgundy); font-family:var(--font-display); font-size:15px; font-weight:700; }
+[data-theme="dark"] .user-badge strong{ color:var(--burgundy-soft); }
+#user-name-slot-mobile .user-badge{ margin-top:1px; font-size:11px; }
+#user-name-slot-mobile .user-badge strong{ font-size:13px; }
+
+/* ---------- Aviso de privacidade ---------- */
+.privacy-note{
+  font-family:var(--font-ui); font-size:11px; line-height:1.5; color:var(--ink-soft);
+  background:var(--bg-alt); border:1px solid var(--border); border-radius:4px;
+  padding:9px 11px;
+}
+
+/* ============================================================
+   TOUR GUIADO
+   ============================================================ */
+.tour-spotlight{
+  position:fixed; z-index:200; border-radius:8px;
+  box-shadow: 0 0 0 9999px rgba(15,10,5,.62);
+  border:2px solid var(--gold-soft);
+  pointer-events:none;
+  transition: top .25s ease, left .25s ease, width .25s ease, height .25s ease;
+}
+.tour-tooltip{
+  position:fixed; z-index:201; width:290px; max-width:calc(100vw - 24px);
+  background:var(--surface-raised); border:1px solid var(--border); border-radius:6px;
+  padding:16px 18px; box-shadow:var(--shadow);
+}
+.tour-tooltip::before{
+  content:""; position:absolute; width:14px; height:14px; background:var(--surface-raised);
+  transform:rotate(45deg);
+}
+.tour-tooltip[data-placement="bottom"]::before{ top:-7px; left:50%; margin-left:-7px; border-left:1px solid var(--border); border-top:1px solid var(--border); }
+.tour-tooltip[data-placement="top"]::before{ bottom:-7px; left:50%; margin-left:-7px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+.tour-tooltip[data-placement="left"]::before{ right:-7px; top:50%; margin-top:-7px; border-top:1px solid var(--border); border-right:1px solid var(--border); }
+.tour-tooltip[data-placement="right"]::before{ left:-7px; top:50%; margin-top:-7px; border-bottom:1px solid var(--border); border-left:1px solid var(--border); }
+.tour-step-count{ font-family:var(--font-ui); font-size:10px; text-transform:uppercase; letter-spacing:.12em; color:var(--gold); font-weight:700; margin-bottom:5px; }
+.tour-tooltip h4{ font-size:19px; margin:0 0 6px; }
+.tour-tooltip p{ font-family:var(--font-ui); font-size:13px; color:var(--ink-soft); margin:0 0 14px; line-height:1.5; }
+.tour-actions{ display:flex; justify-content:space-between; gap:8px; }
+.tour-actions .btn{ flex:1; padding:8px 0; font-size:12.5px; }
+body.tour-active{ overflow:hidden; }
