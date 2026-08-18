@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trinta Ordens do Rei — Os Imperativos das Escrituras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182230;
+    --ink-soft:#2c3a4d;
+    --parchment:#EDE6D6;
+    --parchment-2:#E4DBC6;
+    --rubric:#8B2A2A;
+    --rubric-soft:#a5453f;
+    --gold:#A8873F;
+    --slate:#5B6572;
+    --line: rgba(24,34,48,0.14);
+    --max: 780px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .eyebrow{
+    font-family:'Inter',sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--rubric);
+  }
+  /* ---------- texture ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:5;
+    opacity:0.035; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- header / hero ---------- */
+  header.hero{
+    padding: 5.5rem 1.5rem 4rem;
+    max-width: var(--max);
+    margin:0 auto;
+    border-bottom:1px solid var(--line);
+  }
+  .rubric-mark{
+    width:34px; height:34px;
+    border:1.5px solid var(--rubric);
+    color:var(--rubric);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.85rem;
+    margin-bottom:1.6rem;
+    transform:rotate(45deg);
+  }
+  .rubric-mark span{transform:rotate(-45deg);}
+  h1.title{
+    font-family:'Spectral',serif;
+    font-weight:600;
+    font-size:clamp(2.3rem, 6vw, 3.6rem);
+    line-height:1.06;
+    margin:0 0 0.5rem;
+    color:var(--ink);
+  }
+  h1.title em{
+    font-style:italic;
+    color:var(--rubric);
+    font-weight:500;
+  }
+  .subtitle{
+    font-family:'Inter',sans-serif;
+    color:var(--slate);
+    font-size:1rem;
+    max-width:46ch;
+    margin:0 0 2.4rem;
+  }
+  .lede{
+    font-size:1.18rem;
+    color:var(--ink-soft);
+  }
+  .lede p{margin:0 0 1.1rem;}
+  .lede p:last-child{margin-bottom:0;}
+
+  /* ---------- layout shell ---------- */
+  .shell{
+    max-width:1180px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 220px minmax(0,1fr);
+    gap: 2.5rem;
+    padding: 0 1.5rem;
+  }
+  nav.index{
+    position:sticky;
+    top:2.5rem;
+    align-self:start;
+    padding-top:3rem;
+    max-height: calc(100vh - 5rem);
+    overflow-y:auto;
+  }
+  nav.index .eyebrow{display:block; margin-bottom:0.9rem;}
+  nav.index ol{
+    list-style:none; margin:0; padding:0;
+    counter-reset: idx;
+    font-family:'Inter',sans-serif;
+    font-size:0.82rem;
+  }
+  nav.index li{margin-bottom:0.15rem;}
+  nav.index a{
+    display:flex; gap:0.6rem;
+    text-decoration:none;
+    color:var(--slate);
+    padding:0.28rem 0.3rem;
+    border-left:2px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  nav.index a .n{
+    font-variant-numeric: tabular-nums;
+    color:var(--gold);
+    min-width:1.4em;
+  }
+  nav.index a:hover{color:var(--ink);}
+  nav.index a.active{
+    color:var(--rubric);
+    border-left-color:var(--rubric);
+    font-weight:600;
+  }
+
+  main{
+    padding: 3rem 0 6rem;
+    max-width: var(--max);
+  }
+
+  /* ---------- items ---------- */
+  .item{
+    padding: 2.6rem 0;
+    border-bottom:1px solid var(--line);
+    scroll-margin-top: 2rem;
+  }
+  .item:first-of-type{padding-top:0;}
+  .item-head{
+    display:flex;
+    align-items:baseline;
+    gap:0.9rem;
+    margin-bottom:0.9rem;
+  }
+  .item-num{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    color:var(--gold);
+    letter-spacing:0.04em;
+  }
+  .item-ref{
+    font-family:'Inter',sans-serif;
+    font-size:0.78rem;
+    color:var(--slate);
+    letter-spacing:0.02em;
+  }
+  h2.verb{
+    font-family:'Spectral',serif;
+    font-weight:700;
+    font-size:clamp(1.7rem, 3.4vw, 2.3rem);
+    color:var(--rubric);
+    margin:0 0 1rem;
+    letter-spacing:0.01em;
+  }
+  blockquote.verse{
+    margin: 0 0 1.2rem;
+    padding: 0.2rem 0 0.2rem 1.1rem;
+    border-left: 3px solid var(--gold);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.08rem;
+  }
+  .body-text p{margin:0 0 0.95rem; color:var(--ink-soft);}
+  .body-text p:last-child{margin-bottom:0;}
+  .body-text strong{color:var(--ink); font-weight:600;}
+
+  /* ---------- closing pattern section ---------- */
+  section.pattern{
+    margin-top: 1rem;
+    padding: 3rem 2rem;
+    background: var(--ink);
+    color: var(--parchment);
+    border-radius: 2px;
+  }
+  section.pattern .eyebrow{color:var(--gold);}
+  section.pattern h2{
+    font-family:'Spectral',serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin: 0.6rem 0 1.6rem;
+    color:#fff;
+  }
+  .verb-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem 0.7rem;
+    margin: 0 0 2rem;
+    padding:0;
+    list-style:none;
+    font-family:'Inter',sans-serif;
+  }
+  .verb-grid li{
+    font-size:0.82rem;
+    letter-spacing:0.03em;
+    padding: 0.32rem 0.7rem;
+    border:1px solid rgba(237,230,214,0.25);
+    color: var(--parchment-2);
+  }
+  .pattern .closing{
+    font-family:'Spectral',serif;
+    font-style:italic;
+    font-size:1.25rem;
+    line-height:1.5;
+    color:#fff;
+    border-top:1px solid rgba(237,230,214,0.2);
+    padding-top:1.6rem;
+    margin:0;
+  }
+  .pattern .closing .rubric-word{ color: var(--gold); font-style:normal; font-weight:600; }
+  .pattern p.support{
+    font-family:'Inter',sans-serif;
+    font-size:0.88rem;
+    color: var(--parchment-2);
+    line-height:1.7;
+    margin-top:1.2rem;
+  }
+
+  footer{
+    text-align:center;
+    font-family:'Inter',sans-serif;
+    font-size:0.75rem;
+    color:var(--slate);
+    padding: 2.5rem 1.5rem 3.5rem;
+    letter-spacing:0.03em;
+  }
+
+  /* ---------- mobile nav toggle ---------- */
+  .mobile-index-toggle{ display:none; }
+
+  @media (max-width: 880px){
+    .shell{ grid-template-columns: 1fr; }
+    nav.index{
+      position: static;
+      max-height:none;
+      padding-top:0;
+      margin-bottom: 0.5rem;
+    }
+    nav.index ol{
+      display:none;
+      flex-direction:column;
+      max-height: 55vh;
+      overflow-y:auto;
+      border:1px solid var(--line);
+      padding: 0.6rem;
+      background: var(--parchment-2);
+    }
+    nav.index ol.open{ display:flex; }
+    .mobile-index-toggle{
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+      width:100%;
+      font-family:'Inter',sans-serif;
+      font-size:0.82rem;
+      font-weight:600;
+      letter-spacing:0.05em;
+      text-transform:uppercase;
+      color:var(--rubric);
+      background:transparent;
+      border:1px solid var(--rubric);
+      padding:0.7rem 1rem;
+      cursor:pointer;
+      margin-top:0.8rem;
+    }
+    header.hero{ padding: 3.5rem 1.25rem 2.5rem; }
+    main{ padding: 2.5rem 0 4rem; }
+    .shell{ padding: 0 1.25rem; }
+    section.pattern{ padding: 2.2rem 1.3rem; }
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="rubric-mark"><span>30</span></div>
+  <h1 class="title">Trinta ordens do <em>Rei</em></h1>
+  <p class="subtitle">Os imperativos das Escrituras lidos à luz da graça soberana — teologia reformada</p>
+  <div class="lede">
+    <p>Na Escritura, há muitos mandamentos expressos por verbos no imperativo. Na perspectiva reformada, isso é particularmente importante porque a graça soberana de Deus não elimina a obrigação humana. Deus salva pela graça, mas o mesmo Deus que justifica também ordena, santifica e chama seu povo à obediência.</p>
+    <p>Nem todo imperativo bíblico significa exatamente a mesma coisa. Há ordens dirigidas a indivíduos, à igreja, aos governantes, aos incrédulos, aos discípulos. Há imperativos negativos (“não…”) e positivos (“faça…”). E, gramaticalmente, uma forma imperativa nem sempre significa “ordem militar” — porém, quando Deus ordena, existe autoridade divina por trás do mandamento.</p>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="index" aria-label="Índice dos imperativos">
+    <span class="eyebrow">Índice</span>
+    <button class="mobile-index-toggle" id="idxToggle" aria-expanded="false">Ver os 30 imperativos ▾</button>
+    <ol id="idxList">
+      <li><a href="#item-01"><span class="n">01</span> Ame</a></li>
+      <li><a href="#item-02"><span class="n">02</span> Arrependa-se</a></li>
+      <li><a href="#item-03"><span class="n">03</span> Creia</a></li>
+      <li><a href="#item-04"><span class="n">04</span> Buscai</a></li>
+      <li><a href="#item-05"><span class="n">05</span> Não andeis ansiosos</a></li>
+      <li><a href="#item-06"><span class="n">06</span> Não julgueis</a></li>
+      <li><a href="#item-07"><span class="n">07</span> Vigiai</a></li>
+      <li><a href="#item-08"><span class="n">08</span> Orai</a></li>
+      <li><a href="#item-09"><span class="n">09</span> Dai graças</a></li>
+      <li><a href="#item-10"><span class="n">10</span> Regozijai-vos</a></li>
+      <li><a href="#item-11"><span class="n">11</span> Não temais</a></li>
+      <li><a href="#item-12"><span class="n">12</span> Sede santos</a></li>
+      <li><a href="#item-13"><span class="n">13</span> Sede perfeitos</a></li>
+      <li><a href="#item-14"><span class="n">14</span> Sede humildes</a></li>
+      <li><a href="#item-15"><span class="n">15</span> Perdoai</a></li>
+      <li><a href="#item-16"><span class="n">16</span> Não mintais</a></li>
+      <li><a href="#item-17"><span class="n">17</span> Fazei morrer</a></li>
+      <li><a href="#item-18"><span class="n">18</span> Revesti-vos</a></li>
+      <li><a href="#item-19"><span class="n">19</span> Perseverai</a></li>
+      <li><a href="#item-20"><span class="n">20</span> Resisti</a></li>
+      <li><a href="#item-21"><span class="n">21</span> Aproximai-vos</a></li>
+      <li><a href="#item-22"><span class="n">22</span> Não vos conformeis</a></li>
+      <li><a href="#item-23"><span class="n">23</span> Apresentai</a></li>
+      <li><a href="#item-24"><span class="n">24</span> Sede cheios</a></li>
+      <li><a href="#item-25"><span class="n">25</span> Honrai</a></li>
+      <li><a href="#item-26"><span class="n">26</span> Ide</a></li>
+      <li><a href="#item-27"><span class="n">27</span> Fazei discípulos</a></li>
+      <li><a href="#item-28"><span class="n">28</span> Ensinai</a></li>
+      <li><a href="#item-29"><span class="n">29</span> Não ameis o mundo</a></li>
+      <li><a href="#item-30"><span class="n">30</span> Guardai-vos dos ídolos</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <article class="item" id="item-01">
+      <div class="item-head"><span class="item-num">Nº 01</span><span class="item-ref">Mateus 22:39</span></div>
+      <h2 class="verb">Ame</h2>
+      <blockquote class="verse">“Ame o seu próximo como você ama a si mesmo.”</blockquote>
+      <div class="body-text">
+        <p>Jesus não está fazendo uma sugestão de boa convivência — o verbo “ame” é uma ordem. Isso é extraordinariamente profundo na teologia reformada: Cristo não diz “ame seu próximo quando ele merecer” nem “quando você sentir vontade”. É mandamento.</p>
+        <p>O contexto é ainda mais forte: o amor ao próximo está ligado ao primeiro e maior mandamento, amar a Deus. Na perspectiva reformada, portanto, o amor cristão não é primordialmente um sentimento espontâneo. É obediência à vontade revelada de Deus, produzida e aperfeiçoada pela graça.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-02">
+      <div class="item-head"><span class="item-num">Nº 02</span><span class="item-ref">Marcos 1:15</span></div>
+      <h2 class="verb">Arrependa-se</h2>
+      <blockquote class="verse">“Arrependam-se e creiam no evangelho.”</blockquote>
+      <div class="body-text">
+        <p>Aqui temos dois imperativos fundamentais: <strong>arrependam-se</strong> e <strong>creiam</strong>. O evangelho não é apresentado simplesmente como uma informação que podemos analisar e, eventualmente, aceitar. Existe uma ordem divina.</p>
+        <p>Na perspectiva reformada, porém, surge uma pergunta: se o homem está morto em seus delitos e pecados, como pode Deus ordená-lo a arrepender-se e crer? A resposta reformada é a doutrina da graça eficaz. Deus ordena aquilo que o pecador deve fazer e, na regeneração, concede aquilo que o pecador, por sua natureza caída, não produziria autonomamente. O mandamento é real, a incapacidade humana é real, a graça eficaz também é real. Não existe contradição.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-03">
+      <div class="item-head"><span class="item-num">Nº 03</span><span class="item-ref">João 6:29</span></div>
+      <h2 class="verb">Creia</h2>
+      <blockquote class="verse">“A obra de Deus é esta: que vocês creiam naquele que ele enviou.”</blockquote>
+      <div class="body-text">
+        <p>A fé não é apresentada como mera possibilidade psicológica. É dever. O homem deve crer em Cristo. A teologia reformada, entretanto, distingue cuidadosamente: a fé é obrigação do homem; a capacidade espiritual para crer é concedida por Deus.</p>
+        <p>Isso protege duas verdades bíblicas simultaneamente: responsabilidade humana e soberania divina.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-04">
+      <div class="item-head"><span class="item-num">Nº 04</span><span class="item-ref">Mateus 6:33</span></div>
+      <h2 class="verb">Buscai</h2>
+      <blockquote class="verse">“Busquem, pois, em primeiro lugar, o Reino de Deus e a sua justiça…”</blockquote>
+      <div class="body-text">
+        <p>Cristo estabelece uma prioridade. Não significa simplesmente “se Deus for importante para você, seria bom procurar o Reino” — é uma ordem. E observe a expressão “em primeiro lugar”: a questão não é somente se buscamos Deus, mas qual posição Ele ocupa na ordem dos nossos afetos, decisões e prioridades.</p>
+        <p>Na perspectiva reformada, isso confronta diretamente a idolatria do coração.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-05">
+      <div class="item-head"><span class="item-num">Nº 05</span><span class="item-ref">Mateus 6:25</span></div>
+      <h2 class="verb">Não andeis ansiosos</h2>
+      <blockquote class="verse">“Não fiquem preocupados com a sua vida…”</blockquote>
+      <div class="body-text">
+        <p>É um imperativo negativo. Isso é interessante porque mostra que a Bíblia não trata somente de comportamentos externos — Deus também ordena como devemos responder interiormente às circunstâncias. O cristão não recebe permissão para transformar a preocupação em senhor do coração.</p>
+        <p>A ordem é acompanhada da providência divina: Deus alimenta as aves e veste os lírios. O mandamento está fundamentado na providência soberana de Deus.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-06">
+      <div class="item-head"><span class="item-num">Nº 06</span><span class="item-ref">Mateus 7:1</span></div>
+      <h2 class="verb">Não julgueis</h2>
+      <blockquote class="verse">“Não julguem, para que vocês não sejam julgados.”</blockquote>
+      <div class="body-text">
+        <p>Outro imperativo negativo, mas aqui precisamos ter cuidado: Jesus não está proibindo todo discernimento moral, porque o próprio Novo Testamento ordena discernir doutrinas e identificar falsos profetas. O alvo é o julgamento hipócrita, arrogante e condenatório.</p>
+        <p>Na perspectiva reformada: o homem que conhece a própria depravação não pode olhar para o pecado do outro com espírito de superioridade. A doutrina da depravação total deveria produzir humildade, não arrogância.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-07">
+      <div class="item-head"><span class="item-num">Nº 07</span><span class="item-ref">Mateus 26:41</span></div>
+      <h2 class="verb">Vigiai</h2>
+      <blockquote class="verse">“Vigiem e orem, para que não caiam em tentação…”</blockquote>
+      <div class="body-text">
+        <p>Dois imperativos — vigiar e orar — extremamente reformados em sua estrutura. O cristão deve vigiar, orar, lutar contra a tentação; mas sua perseverança depende da graça sustentadora de Deus.</p>
+        <p>A soberania divina não produz passividade. Pelo contrário: porque Deus preserva os seus, os seus perseveram.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-08">
+      <div class="item-head"><span class="item-num">Nº 08</span><span class="item-ref">1 Tessalonicenses 5:17</span></div>
+      <h2 class="verb">Orai</h2>
+      <blockquote class="verse">“Orem sem cessar.”</blockquote>
+      <div class="body-text">
+        <p>É uma ordem. Não significa que o cristão deve literalmente pronunciar palavras durante cada segundo da existência — a ideia é de uma vida caracterizada por dependência contínua de Deus.</p>
+        <p>Na visão reformada, a oração é um dos meios ordinários pelos quais Deus preserva e santifica seus filhos. Deus determina não apenas os fins, mas também os meios.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-09">
+      <div class="item-head"><span class="item-num">Nº 09</span><span class="item-ref">1 Tessalonicenses 5:18</span></div>
+      <h2 class="verb">Dai graças</h2>
+      <blockquote class="verse">“Em tudo, deem graças…”</blockquote>
+      <div class="body-text">
+        <p>Observe a força: <strong>em tudo</strong>. Não significa necessariamente agradecer pelo mal moral, como se o pecado fosse bom — significa reconhecer Deus e sua providência mesmo em circunstâncias difíceis.</p>
+        <p>Isso está profundamente ligado à doutrina reformada da providência. Se Deus é soberano, nada escapa ao seu governo; por isso o cristão pode agradecer mesmo quando não compreende.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-10">
+      <div class="item-head"><span class="item-num">Nº 10</span><span class="item-ref">Filipenses 4:4</span></div>
+      <h2 class="verb">Regozijai-vos</h2>
+      <blockquote class="verse">“Alegrem-se sempre no Senhor; outra vez digo: alegrem-se!”</blockquote>
+      <div class="body-text">
+        <p>Paulo repete a ordem. E existe uma pequena palavra que muda tudo: “no Senhor”. A fonte da alegria cristã não é a circunstância. É Cristo.</p>
+        <p>Paulo podia ordenar alegria porque a alegria cristã não depende de circunstâncias favoráveis.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-11">
+      <div class="item-head"><span class="item-num">Nº 11</span><span class="item-ref">Mateus 10:28</span></div>
+      <h2 class="verb">Não temais</h2>
+      <blockquote class="verse">“Não tenham medo dos que matam o corpo…”</blockquote>
+      <div class="body-text">
+        <p>Novamente um imperativo negativo. A razão? O temor correto deve estar orientado para Deus. Isso não significa que o cristão nunca experimentará medo emocional — significa que o medo não deve governar sua fidelidade.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-12">
+      <div class="item-head"><span class="item-num">Nº 12</span><span class="item-ref">1 Pedro 1:15–16</span></div>
+      <h2 class="verb">Sede santos</h2>
+      <blockquote class="verse">“Sejam santos em tudo o que fizerem…”</blockquote>
+      <div class="body-text">
+        <p>Isso é santificação. E aqui encontramos uma característica fundamental da teologia reformada: a justificação é somente pela fé, mas a fé que justifica nunca permanece sozinha. O Deus que declara o pecador justo também começa a transformá-lo.</p>
+        <p>Santidade não é a causa da justificação. É fruto dela.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-13">
+      <div class="item-head"><span class="item-num">Nº 13</span><span class="item-ref">Mateus 5:48</span></div>
+      <h2 class="verb">Sede perfeitos</h2>
+      <blockquote class="verse">“Portanto, sejam perfeitos como é perfeito o Pai de vocês, que está nos céus.”</blockquote>
+      <div class="body-text">
+        <p>Essa é uma ordem que parece impossível — e justamente aí encontramos uma realidade importante da Lei de Deus. Ela não existe para nos permitir dizer “consegui cumprir tudo”. Ela revela a santidade de Deus e expõe nossa insuficiência.</p>
+        <p>Na perspectiva reformada, isso nos conduz à necessidade de Cristo. Mas não devemos concluir “como não consigo perfeitamente, então não preciso obedecer”. A conclusão bíblica é: preciso da graça de Cristo e, pela graça, devo buscar santidade.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-14">
+      <div class="item-head"><span class="item-num">Nº 14</span><span class="item-ref">Filipenses 2:3</span></div>
+      <h2 class="verb">Sede humildes</h2>
+      <blockquote class="verse">“Por humildade, considerem os outros superiores a vocês mesmos.”</blockquote>
+      <div class="body-text">
+        <p>A doutrina reformada possui aqui uma aplicação poderosa. Se a salvação é pela graça, mediante a fé, em Cristo, para a glória de Deus, então não existe espaço para vanglória espiritual. Efésios 2:8-9 destrói o orgulho: “não de obras, para que ninguém se glorie.”</p>
+        <p>A soberania da graça deveria produzir humildade radical.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-15">
+      <div class="item-head"><span class="item-num">Nº 15</span><span class="item-ref">Efésios 4:32</span></div>
+      <h2 class="verb">Perdoai</h2>
+      <blockquote class="verse">Paulo ordena que os cristãos sejam bondosos e compassivos, perdoando uns aos outros.</blockquote>
+      <div class="body-text">
+        <p>Novamente, não é “perdoe quando sentir vontade”. O fundamento é: “assim como Deus, em Cristo, perdoou vocês.” A ética cristã nasce do evangelho.</p>
+        <p>Primeiro Deus nos perdoa em Cristo; depois nós perdoamos o próximo. A graça recebida torna-se graça demonstrada.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-16">
+      <div class="item-head"><span class="item-num">Nº 16</span><span class="item-ref">Colossenses 3:9</span></div>
+      <h2 class="verb">Não mintais</h2>
+      <blockquote class="verse">“Não mintam uns aos outros…”</blockquote>
+      <div class="body-text">
+        <p>Outro imperativo negativo. A razão apresentada é teológica: vocês já se despiram do velho homem. Ou seja, a ética cristã deriva da nova identidade em Cristo.</p>
+        <p>Não obedecemos para fabricar uma nova identidade. Obedecemos porque recebemos uma nova identidade.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-17">
+      <div class="item-head"><span class="item-num">Nº 17</span><span class="item-ref">Colossenses 3:5</span></div>
+      <h2 class="verb">Fazei morrer</h2>
+      <blockquote class="verse">“Façam morrer, pois, tudo o que pertence à natureza terrena…”</blockquote>
+      <div class="body-text">
+        <p>Uma das expressões mais fortes das Escrituras. O cristianismo bíblico não apresenta o pecado como algo que devemos simplesmente administrar. Paulo manda: mate o pecado. É a linguagem da mortificação.</p>
+        <p>Na tradição reformada, isso foi enfatizado fortemente, inclusive por autores como John Owen. O pecado não deve ser acariciado. Deve ser combatido.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-18">
+      <div class="item-head"><span class="item-num">Nº 18</span><span class="item-ref">Colossenses 3:12</span></div>
+      <h2 class="verb">Revesti-vos</h2>
+      <blockquote class="verse">“Revistam-se, pois, como eleitos de Deus…”</blockquote>
+      <div class="body-text">
+        <p>Depois de mandar mortificar o pecado, Paulo manda revestir-se. Observe a sequência: eleitos → santidade, e não santidade → eleição.</p>
+        <p>Essa ordem é teologicamente importantíssima. A eleição não é desculpa para desobediência. É fundamento para uma vida transformada.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-19">
+      <div class="item-head"><span class="item-num">Nº 19</span><span class="item-ref">Colossenses 4:2</span></div>
+      <h2 class="verb">Perseverai</h2>
+      <blockquote class="verse">“Perseverem na oração, vigiando com ações de graças.”</blockquote>
+      <div class="body-text">
+        <p>A perseverança cristã aparece como mandamento. Isso parece paradoxal diante da doutrina da perseverança dos santos — mas não é. Deus preserva os seus por meio da perseverança deles.</p>
+        <p>A soberania divina não torna os meios desnecessários.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-20">
+      <div class="item-head"><span class="item-num">Nº 20</span><span class="item-ref">Tiago 4:7</span></div>
+      <h2 class="verb">Resisti</h2>
+      <blockquote class="verse">“Portanto, sujeitem-se a Deus, mas resistam ao diabo, e ele fugirá de vocês.”</blockquote>
+      <div class="body-text">
+        <p>Dois imperativos, e a ordem é significativa: primeiro sujeição a Deus, depois resistência ao diabo.</p>
+        <p>A verdadeira guerra espiritual não começa com técnicas misteriosas. Começa com submissão a Deus.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-21">
+      <div class="item-head"><span class="item-num">Nº 21</span><span class="item-ref">Tiago 4:8</span></div>
+      <h2 class="verb">Aproximai-vos</h2>
+      <blockquote class="verse">“Aproximem-se de Deus, e ele se aproximará de vocês.”</blockquote>
+      <div class="body-text">
+        <p>É uma linguagem de relacionamento e comunhão. O cristão não deve viver espiritualmente distante, indiferente ou negligente. Deve aproximar-se de Deus.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-22">
+      <div class="item-head"><span class="item-num">Nº 22</span><span class="item-ref">Romanos 12:2</span></div>
+      <h2 class="verb">Não vos conformeis</h2>
+      <blockquote class="verse">“Não se conformem com este mundo, mas transformem-se pela renovação da mente…”</blockquote>
+      <div class="body-text">
+        <p>Dois movimentos: não se conformar e transformar-se. O cristão não deve simplesmente reproduzir os valores da cultura ao redor.</p>
+        <p>Sua mente deve ser renovada pela Palavra de Deus.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-23">
+      <div class="item-head"><span class="item-num">Nº 23</span><span class="item-ref">Romanos 12:1</span></div>
+      <h2 class="verb">Apresentai</h2>
+      <blockquote class="verse">“Ofereçam o corpo de vocês como sacrifício vivo…”</blockquote>
+      <div class="body-text">
+        <p>A vida inteira passa a ser culto. Não existe uma divisão absoluta entre vida espiritual e vida comum.</p>
+        <p>Para o cristão, trabalhar, estudar, correr, programar, conversar, descansar e servir podem estar debaixo do senhorio de Cristo. Tudo deve ser vivido <em>coram Deo</em> — diante de Deus.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-24">
+      <div class="item-head"><span class="item-num">Nº 24</span><span class="item-ref">Efésios 5:18</span></div>
+      <h2 class="verb">Não vos embriagueis / sede cheios</h2>
+      <blockquote class="verse">“Não se embriaguem com vinho… mas deixem-se encher pelo Espírito.”</blockquote>
+      <div class="body-text">
+        <p>Paulo estabelece um contraste — existe aqui uma ordem para rejeitar determinado domínio e buscar outro. Não é simplesmente “tenha uma experiência religiosa”.</p>
+        <p>É uma vida continuamente submetida à ação do Espírito.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-25">
+      <div class="item-head"><span class="item-num">Nº 25</span><span class="item-ref">1 Pedro 2:17</span></div>
+      <h2 class="verb">Honrai</h2>
+      <blockquote class="verse">“Tratem todos com honra, amem os irmãos, temam a Deus, honrem o rei.”</blockquote>
+      <div class="body-text">
+        <p>Observe a sequência: tratem, amem, temam, honrem. A vida cristã possui mandamentos concretos. Não é apenas teologia abstrata.</p>
+        <p>A doutrina correta deve produzir vida correta.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-26">
+      <div class="item-head"><span class="item-num">Nº 26</span><span class="item-ref">Mateus 28:19</span></div>
+      <h2 class="verb">Ide</h2>
+      <blockquote class="verse">“Portanto, vão e façam discípulos de todas as nações…”</blockquote>
+      <div class="body-text">
+        <p>O Cristo soberano envia sua Igreja. Isso é especialmente significativo na teologia reformada: se Deus já determinou salvar seus eleitos, por que evangelizar? Porque Deus também determinou os meios pelos quais chamará seus eleitos.</p>
+        <p>A eleição não elimina a evangelização. Ela dá confiança à evangelização. Paulo diz em 2 Timóteo 2:10 que tudo suporta por causa dos eleitos, para que também eles obtenham a salvação que está em Cristo Jesus. A eleição alimenta a missão.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-27">
+      <div class="item-head"><span class="item-num">Nº 27</span><span class="item-ref">Mateus 28:19</span></div>
+      <h2 class="verb">Fazei discípulos</h2>
+      <div class="body-text">
+        <p>Na Grande Comissão, existe também “façam discípulos”. A missão da Igreja não é simplesmente conseguir decisões momentâneas. É fazer discípulos — e discípulos são ensinados a obedecer, como aparece no versículo seguinte: “ensinando-os a guardar todas as coisas que tenho ordenado a vocês.”</p>
+        <p>Observe a lógica: evangelização → discipulado → ensino → obediência.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-28">
+      <div class="item-head"><span class="item-num">Nº 28</span><span class="item-ref">Mateus 28:20</span></div>
+      <h2 class="verb">Ensinai</h2>
+      <div class="body-text">
+        <p>Cristo manda ensinar. Isso significa que a Igreja não deve apenas proclamar “Jesus salva”. Deve também ensinar quem é Jesus, o que Ele fez, o que Ele ordena, o que significa segui-lo.</p>
+        <p>A fé cristã possui conteúdo doutrinário.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-29">
+      <div class="item-head"><span class="item-num">Nº 29</span><span class="item-ref">1 João 2:15</span></div>
+      <h2 class="verb">Não ameis o mundo</h2>
+      <blockquote class="verse">“Não amem o mundo nem as coisas que há no mundo.”</blockquote>
+      <div class="body-text">
+        <p>O problema não é a criação material em si. É o sistema de valores rebelde contra Deus.</p>
+        <p>O cristão precisa aprender a distinguir estar no mundo de pertencer ao mundo.</p>
+      </div>
+    </article>
+
+    <article class="item" id="item-30">
+      <div class="item-head"><span class="item-num">Nº 30</span><span class="item-ref">1 João 5:21</span></div>
+      <h2 class="verb">Guardai-vos dos ídolos</h2>
+      <blockquote class="verse">“Filhinhos, guardem-se dos ídolos.”</blockquote>
+      <div class="body-text">
+        <p>Depois de toda a teologia da carta, João termina com uma ordem prática. Isso nos ensina algo importante: teologia bíblica deve produzir vigilância prática.</p>
+      </div>
+    </article>
+
+    <section class="pattern">
+      <span class="eyebrow">Síntese</span>
+      <h2>O grande padrão reformado</h2>
+      <ul class="verb-grid">
+        <li>Arrependa-se</li><li>Creia</li><li>Ame</li><li>Ore</li><li>Vigie</li>
+        <li>Seja santo</li><li>Perdoe</li><li>Seja humilde</li><li>Resista</li><li>Submeta-se</li>
+        <li>Mortifique o pecado</li><li>Revista-se de Cristo</li><li>Não se conforme</li>
+        <li>Seja transformado</li><li>Vá</li><li>Faça discípulos</li><li>Ensine</li><li>Persevere</li>
+      </ul>
+      <p class="closing">Deus não nos manda obedecer para <span class="rubric-word">comprarmos</span> a salvação; Ele nos salva pela graça e, então, nos chama a obedecer.</p>
+      <p class="support">Essa distinção é fundamental. Não é: obediência → salvação → aceitação diante de Deus. É: eleição → chamado eficaz → regeneração → fé → justificação → adoção → santificação → perseverança → glorificação. Dentro dessa caminhada, os imperativos de Deus são reais. Por isso a doutrina reformada pode afirmar simultaneamente “a salvação é somente pela graça” e “você deve obedecer aos mandamentos de Deus”. Não há contradição: a justificação não é conquistada pela obediência, mas a santificação necessariamente produz obediência. Como diz uma formulação clássica da tradição reformada — não somos salvos pelas boas obras, mas somos salvos para as boas obras. Efésios 2:8-10 coloca as duas verdades lado a lado: somos salvos pela graça, mediante a fé, “não de obras”, mas fomos criados em Cristo Jesus “para boas obras”.</p>
+      <p class="support">E talvez essa seja a melhor maneira de compreender Mateus 22:39: “ame” não é uma sugestão de Cristo. É uma ordem do Rei. E o maravilhoso é que o mesmo Rei que ordena o amor é aquele que, pela sua graça, transforma corações que naturalmente não amariam a Deus nem ao próximo como deveriam.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>Trinta imperativos das Escrituras — lidos à luz da graça soberana</footer>
+
+<script>
+  const toggle = document.getElementById('idxToggle');
+  const list = document.getElementById('idxList');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const open = list.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+      toggle.textContent = open ? 'Ocultar índice ▴' : 'Ver os 30 imperativos ▾';
+    });
+  }
+
+  const links = document.querySelectorAll('nav.index a');
+  const items = document.querySelectorAll('.item');
+  if ('IntersectionObserver' in window && items.length) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        const link = document.querySelector('nav.index a[href="#' + id + '"]');
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+    items.forEach(el => obs.observe(el));
+  }
+</script>
+</body>
+</html>
