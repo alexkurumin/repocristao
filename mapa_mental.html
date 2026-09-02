@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como Estudar a Bíblia - Mapa Mental Interativo</title>
+    <style>
+        :root {
+            --bg-color: #f4f1ea;
+            --card-bg: #ffffff;
+            --text-color: #2b2b2b;
+            --text-muted: #555555;
+            --border-color: #e0dacf;
+            --primary-accent: #111827;
+
+            /* Cores dos Ramos */
+            --c1: #1e3a8a; /* Azul */
+            --c2: #14532d; /* Verde Escuro */
+            --c3: #c2410c; /* Laranja */
+            --c4: #581c87; /* Roxo */
+            --c5: #b91c1c; /* Vermelho */
+            --c6: #1d4ed8; /* Azul Vivo */
+            --c7: #0f766e; /* Teal */
+            --c8: #d97706; /* Amarelo/Dourado */
+            --c9: #6b21a8; /* Roxo Escuro */
+            --c10: #15803d; /* Verde */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 10px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--primary-accent);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        header p.subtitle {
+            font-weight: 700;
+            color: #d97706;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .main-quote {
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 6px solid var(--primary-accent);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .card-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        li::before {
+            content: "•";
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        /* Temas Individuais dos Cards */
+        .card-1 { border-color: var(--c1); } .card-1 .card-number { background: var(--c1); } .card-1 .card-title { color: var(--c1); }
+        .card-2 { border-color: var(--c2); } .card-2 .card-number { background: var(--c2); } .card-2 .card-title { color: var(--c2); }
+        .card-3 { border-color: var(--c3); } .card-3 .card-number { background: var(--c3); } .card-3 .card-title { color: var(--c3); }
+        .card-4 { border-color: var(--c4); } .card-4 .card-number { background: var(--c4); } .card-4 .card-title { color: var(--c4); }
+        .card-5 { border-color: var(--c5); } .card-5 .card-number { background: var(--c5); } .card-5 .card-title { color: var(--c5); }
+        .card-6 { border-color: var(--c6); } .card-6 .card-number { background: var(--c6); } .card-6 .card-title { color: var(--c6); }
+        .card-7 { border-color: var(--c7); } .card-7 .card-number { background: var(--c7); } .card-7 .card-title { color: var(--c7); }
+        .card-8 { border-color: var(--c8); } .card-8 .card-number { background: var(--c8); } .card-8 .card-title { color: var(--c8); }
+        .card-9 { border-color: var(--c9); } .card-9 .card-number { background: var(--c9); } .card-9 .card-title { color: var(--c9); }
+        .card-10 { border-color: var(--c10); } .card-10 .card-number { background: var(--c10); } .card-10 .card-title { color: var(--c10); }
+
+        /* Estilização da Linha da Redenção (Ramo 7) */
+        .redemption-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .redemption-flow span {
+            color: var(--c7);
+        }
+
+        .redemption-flow .arrow {
+            color: #94a3b8;
+        }
+
+        /* Estilização da Doutrina da Graça (Ramo 8) */
+        .grace-box {
+            background: #fffbeeb3;
+            border: 1px dashed var(--c8);
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .grace-box h4 {
+            color: var(--c8);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        /* Footer / Resumo */
+        footer {
+            max-width: 1400px;
+            margin: 30px auto 0 auto;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .footer-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+        }
+
+        .summary-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            color: #f59e0b;
+            font-size: 0.95rem;
+        }
+
+        .summary-flow .step {
+            background: #334155;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: #ffffff;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.6rem; }
+            .card-title { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <p class="subtitle">SOLI DEO GLORIA</p>
+        <h1>COMO ESTUDAR A BÍBLIA</h1>
+        <p class="main-quote">
+            "Toda Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção, para a instrução na justiça, para que o homem de Deus seja apto e plenamente preparado para toda boa obra." <br>
+            <strong>2Tm 3.16-17</strong>
+        </p>
+    </header>
+
+    <main class="grid-container">
+
+        <article class="card card-1">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <h2 class="card-title">O que o texto diz?</h2>
+            </div>
+            <ul>
+                <li>Leia várias vezes</li>
+                <li>Observe palavras repetidas</li>
+                <li>Identifique personagens</li>
+                <li>Identifique ações e acontecimentos</li>
+                <li>Observe contrastes e comparações</li>
+                <li>Pergunte: Quem? O quê? Quando? Onde? Por quê?</li>
+            </ul>
+        </article>
+
+        <article class="card card-2">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <h2 class="card-title">Qual é o contexto?</h2>
+            </div>
+            <ul>
+                <li><strong>Contexto imediato:</strong> versículos anteriores e posteriores</li>
+                <li><strong>Contexto do livro:</strong> propósito e tema</li>
+                <li><strong>Contexto histórico:</strong> época, acontecimentos, costumes</li>
+                <li><strong>Contexto literário:</strong> narrativa, poesia, profecia, epístola etc.</li>
+                <li><strong>Contexto canônico:</strong> relação com o restante das Escrituras</li>
+            </ul>
+        </article>
+
+        <article class="card card-3">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <h2 class="card-title">O que o texto significa?</h2>
+            </div>
+            <ul>
+                <li>Qual era a intenção do autor?</li>
+                <li>O que significava para os primeiros leitores?</li>
+                <li>Qual é a ideia principal?</li>
+                <li>Existe uma promessa?</li>
+                <li>Existe um mandamento?</li>
+                <li>Existe uma advertência?</li>
+                <li>Existe um pecado sendo exposto?</li>
+                <li>Existe uma verdade sobre Deus?</li>
+            </ul>
+        </article>
+
+        <article class="card card-4">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <h2 class="card-title">O que o texto revela sobre Deus?</h2>
+            </div>
+            <ul>
+                <li>Soberania</li>
+                <li>Santidade</li>
+                <li>Justiça</li>
+                <li>Misericórdia</li>
+                <li>Graça</li>
+                <li>Fidelidade</li>
+                <li>Ira contra o pecado</li>
+                <li>Amor</li>
+                <li>Providência</li>
+            </ul>
+        </article>
+
+        <article class="card card-5">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <h2 class="card-title">O que o texto revela sobre o homem?</h2>
+            </div>
+            <ul>
+                <li>Criação à imagem de Deus</li>
+                <li>Queda</li>
+                <li>Pecado</li>
+                <li>Incapacidade espiritual</li>
+                <li>Necessidade de graça</li>
+                <li>Necessidade de redenção</li>
+                <li>Responsabilidade diante de Deus</li>
+            </ul>
+        </article>
+
+        <article class="card card-6">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <h2 class="card-title">Como o texto se relaciona com Cristo?</h2>
+            </div>
+            <ul>
+                <li>Promessa de Cristo</li>
+                <li>Necessidade de Cristo</li>
+                <li>Profecia sobre Cristo</li>
+                <li>Tipologia</li>
+                <li>Obra de Cristo</li>
+                <li>Vida perfeita de Cristo</li>
+                <li>Morte substitutiva</li>
+                <li>Ressurreição</li>
+                <li>Ascensão</li>
+                <li>Reino de Cristo</li>
+                <li>Segunda vinda</li>
+            </ul>
+        </article>
+
+        <article class="card card-7">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <h2 class="card-title">Como o texto se encaixa na redenção?</h2>
+            </div>
+            <div class="redemption-flow">
+                <span>CRIAÇÃO</span> <span class="arrow">➔</span>
+                <span>QUEDA</span> <span class="arrow">➔</span>
+                <span>PROMESSA</span> <span class="arrow">➔</span>
+                <span>REDENÇÃO</span> <span class="arrow">➔</span>
+                <span>IGREJA</span> <span class="arrow">➔</span>
+                <span>CONSUMAÇÃO</span>
+            </div>
+            <p style="font-size: 0.9rem; text-align: center; color: var(--text-muted); font-style: italic;">
+                Pergunta: Onde estou na história da redenção?
+            </p>
+        </article>
+
+        <article class="card card-8">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <h2 class="card-title">O que a doutrina reformada nos ajuda a enxergar?</h2>
+            </div>
+            <ul>
+                <li><strong>Sola Scriptura</strong> - somente a Escritura</li>
+                <li><strong>Sola Gratia</strong> - somente pela graça</li>
+                <li><strong>Sola Fide</strong> - somente pela fé</li>
+                <li><strong>Solus Christus</strong> - somente Cristo</li>
+                <li><strong>Soli Deo Gloria</strong> - glória somente a Deus</li>
+            </ul>
+            <div class="grace-box">
+                <h4>DOUTRINA DA GRAÇA</h4>
+                <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                    Depravação humana ➔ Eleição ➔ Expiação ➔ Chamado eficaz ➔ Perseverança dos santos
+                </p>
+            </div>
+        </article>
+
+        <article class="card card-9">
+            <div class="card-header">
+                <div class="card-number">9</div>
+                <h2 class="card-title">Como a Bíblia interpreta a Bíblia?</h2>
+            </div>
+            <ul>
+                <li>Compare textos semelhantes</li>
+                <li>Procure passagens paralelas</li>
+                <li>Considere o ensino geral das Escrituras</li>
+                <li>Textos claros ajudam na compreensão dos mais difíceis</li>
+                <li>Não construa uma doutrina sobre um versículo isolado</li>
+            </ul>
+        </article>
+
+        <article class="card card-10">
+            <div class="card-header">
+                <div class="card-number">10</div>
+                <h2 class="card-title">Como isso se aplica à minha vida?</h2>
+            </div>
+            <ul>
+                <li>O que devo crer?</li>
+                <li>O que devo abandonar?</li>
+                <li>O que devo obedecer?</li>
+                <li>O que devo esperar?</li>
+                <li>O que devo temer?</li>
+                <li>Pelo que devo orar?</li>
+                <li>Como isso me conduz a Cristo?</li>
+                <li>Como isso deve produzir santidade e gratidão?</li>
+            </ul>
+        </article>
+
+    </main>
+
+    <footer>
+        <p class="footer-quote">
+            "O que este texto ensina sobre Deus e sua obra em Cristo, e como isso deve transformar minha fé e minha vida?"
+        </p>
+        <div class="summary-flow">
+            <span class="step">TEXTO</span> ➔
+            <span class="step">CONTEXTO</span> ➔
+            <span class="step">SIGNIFICADO</span> ➔
+            <span class="step">DEUS</span> ➔
+            <span class="step">HOMEM</span> ➔
+            <span class="step">CRISTO</span> ➔
+            <span class="step">REDENÇÃO</span> ➔
+            <span class="step">DOUTRINA</span> ➔
+            <span class="step">APLICAÇÃO</span> ➔
+            <span class="step">GLÓRIA DE DEUS</span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Efeito visual ao clicar nos cards (destaque suave)
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    cards.forEach(c => c.style.opacity = '0.6');
+                    card.style.opacity = '1';
+                });
+            });
+
+            // Reseta a opacidade ao clicar fora dos cards
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.card')) {
+                    cards.forEach(c => c.style.opacity = '1');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
