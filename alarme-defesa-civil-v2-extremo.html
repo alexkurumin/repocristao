@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ALERTA FINAL - JESUS ESTÁ VOLTANDO</title>
+<meta name="theme-color" content="#ff0000">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#000;overflow:hidden}
+body{
+  font-family:'JetBrains Mono',monospace;
+  color:#fff;
+  display:flex;flex-direction:column;
+}
+.top-flash{
+  height:14px;
+  background:linear-gradient(90deg,#ff0000 0%,#ffcc00 50%,#ff0000 100%);
+  animation: flashTop 0.2s infinite;
+}
+@keyframes flashTop{0%,100%{filter:brightness(1)}50%{filter:brightness(2)}}
+body.alarm .top-flash{height:22px;animation-duration:0.12s}
+
+.main{
+  flex:1;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:16px;
+  position:relative;
+}
+body.alarm .main{
+  animation: bgPulse 0.5s infinite alternate;
+}
+@keyframes bgPulse{
+  0%{background:radial-gradient(circle at 50% 50%,#2a0000 0%,#000 70%)}
+  100%{background:radial-gradient(circle at 50% 50%,#600 0%,#000 70%)}
+}
+
+.text-wrap{
+  text-align:center;
+  z-index:2;
+}
+.h1{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(32px,9vw,96px);
+  line-height:0.9;
+  letter-spacing:0.01em;
+}
+.h1 span{display:block}
+.l1{color:#fff;text-shadow:0 0 30px #fff}
+.l2{color:#ff001a;text-shadow:0 0 40px #ff001a,0 0 80px #ff001a;animation: glowRed 0.4s infinite alternate}
+.l3{color:#ffcc00;text-shadow:0 0 40px #ffcc00;margin-top:0.15em;animation: glowY 0.5s infinite alternate}
+@keyframes glowRed{from{text-shadow:0 0 20px #ff001a}to{text-shadow:0 0 50px #ff001a,0 0 100px #ff001a}}
+@keyframes glowY{from{opacity:0.8}to{opacity:1}}
+body.alarm .h1{animation: shake 0.18s infinite}
+@keyframes shake{0%,100%{transform:translate(0)}25%{transform:translate(-2px,1px)}75%{transform:translate(2px,-1px)}}
+
+.sub{
+  margin-top:14px;
+  font-size:clamp(10px,2.8vw,13px);
+  letter-spacing:0.25em;
+  color:#888;
+}
+body.alarm .sub{color:#ff6666}
+
+.panel{
+  margin-top:26px;
+  width:100%;max-width:560px;
+  display:flex;flex-direction:column;gap:10px;
+  z-index:2;
+}
+.btn{
+  width:100%;
+  padding:20px;
+  border:4px solid #000;
+  border-radius:12px;
+  font-family:'Anton',sans-serif;
+  font-size:clamp(22px,6vw,32px);
+  letter-spacing:0.07em;
+  cursor:pointer;
+}
+.btn-on{background:#ffcc00;color:#000;box-shadow:0 0 0 4px #111,0 10px 40px rgba(0,0,0,.8)}
+.btn-off{background:#ff0000;color:#fff;box-shadow:0 0 0 4px #000,0 0 60px rgba(255,0,0,.9);animation: btnPulse 0.4s infinite alternate}
+@keyframes btnPulse{from{transform:scale(1)}to{transform:scale(1.03)}}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.card{background:#111;border:1px solid #222;border-radius:8px;padding:10px 12px;text-align:left}
+.card b{font-size:10px;color:#555;letter-spacing:0.2em;display:block;margin-bottom:4px}
+.card span{font-size:12px;color:#ddd}
+.card.alarm{border-color:#ff0000;box-shadow:0 0 15px rgba(255,0,0,.3)}
+
+.range{width:100%;accent-color:#ff0000}
+
+.actions{display:flex;gap:8px;margin-top:4px}
+.small{flex:1;padding:10px;border-radius:8px;border:1px solid #222;background:#151515;color:#777;font-size:11px;letter-spacing:0.1em;cursor:pointer}
+.small:active{background:#222}
+
+#overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.92);
+  display:flex;align-items:center;justify-content:center;
+  z-index:100;
+  flex-direction:column;
+  padding:20px;
+  text-align:center;
+}
+#overlay h2{font-family:'Anton',sans-serif;font-size:clamp(28px,8vw,52px);color:#ffcc00}
+#overlay p{margin-top:12px;color:#888;max-width:400px;line-height:1.5;font-size:13px}
+#overlay button{margin-top:20px}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+<div class="top-flash"></div>
+<div id="overlay">
+  <h2>⚠️ ALERTA FINAL</h2>
+  <p>Este é um alarme de <b style="color:#fff">DEFESA CIVIL ESPIRITUAL</b>.<br>
+  Ao tocar, o som forte de sirene será ativado.<br><br>
+  Mensagem: <b style="color:#ffcc00">JESUS CRISTO É O SENHOR - ELE ESTÁ VOLTANDO - AINDA HÁ TEMPO</b><br><br>
+  Use com sabedoria em evangelismo, ruas, praças.</p>
+  <button class="btn btn-on" id="enterBtn">ENTRAR E ATIVAR 🔊</button>
+  <span style="margin-top:12px;font-size:10px;color:#444;letter-spacing:0.2em">TOQUE PARA LIBERAR ÁUDIO • WEB AUDIO API</span>
+</div>
+
+<div class="main" id="main">
+  <div class="text-wrap">
+    <div class="h1">
+      <span class="l1">JESUS CRISTO É O SENHOR</span>
+      <span class="l2">— ELE ESTÁ VOLTANDO —</span>
+      <span class="l3">AINDA HÁ TEMPO</span>
+    </div>
+    <div class="sub" id="sub">MODO DE ESPERA • TOQUE EM ATIVAR • APOCALIPSE 22:12</div>
+  </div>
+
+  <div class="panel">
+    <button class="btn btn-on" id="toggle">▶ ATIVAR ALARME AGORA</button>
+    <div class="grid2">
+      <div class="card" id="cTime"><b>⏱ TEMPO EM ALERTA</b><span id="t">00:00:00</span></div>
+      <div class="card" id="cMode"><b>📡 STATUS</b><span id="m">AGUARDANDO GESTO</span></div>
+      <div class="card"><b>🔊 VOLUME SIRENE</b><input id="vol" class="range" type="range" min="0" max="1" step="0.01" value="0.9"><span id="volV">90%</span></div>
+      <div class="card"><b>🗣️ VOZ (FALANDO)</b><span id="voiceSt">DESATIVADA</span><div style="margin-top:6px"><label style="font-size:10px;color:#666"><input type="checkbox" id="voiceChk"> ATIVAR VOZ QUE REPETE</label></div></div>
+    </div>
+    <div class="actions">
+      <button class="small" id="fsBtn">⛶ TELA CHEIA</button>
+      <button class="small" id="shareBtn">↗ COMPARTILHAR</button>
+      <button class="small" id="wakeBtn">🔒 TRAVAR TELA LIGADA</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let ctx, oscA, oscB, oscC, gainMaster, lfo, lfoG, filter;
+let alarm=false, startTs, timer;
+let wakeLock=null;
+const toggle=document.getElementById('toggle');
+const tEl=document.getElementById('t');
+const mEl=document.getElementById('m');
+const sub=document.getElementById('sub');
+const vol=document.getElementById('vol');
+const volV=document.getElementById('volV');
+const overlay=document.getElementById('overlay');
+const enterBtn=document.getElementById('enterBtn');
+const voiceChk=document.getElementById('voiceChk');
+const voiceSt=document.getElementById('voiceSt');
+
+function initCtx(){
+  if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state==='suspended') ctx.resume();
+}
+vol.addEventListener('input',()=>{
+  volV.textContent=Math.round(vol.value*100)+'%';
+  if(gainMaster) gainMaster.gain.value=vol.value;
+});
+
+function sirenOn(){
+  initCtx();
+  sirenOff(false);
+  gainMaster=ctx.createGain();
+  gainMaster.gain.value=parseFloat(vol.value);
+  filter=ctx.createBiquadFilter();
+  filter.type='bandpass'; filter.frequency.value=800; filter.Q.value=1;
+  gainMaster.connect(filter); filter.connect(ctx.destination);
+
+  // Osc principal - sirene clássica
+  oscA=ctx.createOscillator(); oscA.type='sawtooth'; oscA.frequency.value=500;
+  // Grave de impacto
+  oscB=ctx.createOscillator(); oscB.type='sine'; oscB.frequency.value=120;
+  // Harmônico para estridência
+  oscC=ctx.createOscillator(); oscC.type='triangle'; oscC.frequency.value=1000;
+
+  lfo=ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=0.16; // ciclo 6.25s
+  lfoG=ctx.createGain(); lfoG.gain.value=380;
+
+  const lfoG2=ctx.createGain(); lfoG2.gain.value=55;
+  const lfoG3=ctx.createGain(); lfoG3.gain.value=600;
+
+  lfo.connect(lfoG); lfoG.connect(oscA.frequency);
+  lfo.connect(lfoG2); lfoG2.connect(oscB.frequency);
+  lfo.connect(lfoG3); lfoG3.connect(oscC.frequency);
+
+  oscA.connect(gainMaster); oscB.connect(gainMaster); oscC.connect(gainMaster);
+  oscA.start(); oscB.start(); oscC.start(); lfo.start();
+
+  // Batida de filtro para sensação de Doppler
+  const filterLfo=ctx.createOscillator(); filterLfo.frequency.value=0.8;
+  const filterLfoG=ctx.createGain(); filterLfoG.gain.value=400;
+  filterLfo.connect(filterLfoG); filterLfoG.connect(filter.frequency);
+  filterLfo.start();
+  // guarda ref
+  sirenOn._flfo=filterLfo; sirenOn._flfoG=filterLfoG;
+}
+function sirenOff(close=true){
+  try{
+    [oscA,oscB,oscC,lfo,sirenOn._flfo].forEach(o=>{if(o){o.stop();o.disconnect();}});
+    if(gainMaster) gainMaster.disconnect();
+    if(filter) filter.disconnect();
+  }catch(e){}
+}
+
+let vibTimer=null;
+function vibOn(){
+  if(!('vibrate' in navigator)) return;
+  vibTimer=setInterval(()=>navigator.vibrate([500,100,500,100,500,300]),2000);
+  navigator.vibrate([500,100,500,100,500,300]);
+}
+function vibOff(){clearInterval(vibTimer); navigator.vibrate(0);}
+
+function startAlarm(){
+  if(alarm) return;
+  alarm=true;
+  document.body.classList.add('alarm');
+  toggle.textContent='■ PARAR ALARME';
+  toggle.className='btn btn-off';
+  mEl.textContent='🔴 EM ALERTA MÁXIMO';
+  sub.textContent='🔴 ALERTA ATIVO • APOCALIPSE 3:11 - EIS QUE VENHO SEM DEMORA';
+  document.getElementById('cTime').classList.add('alarm');
+  document.getElementById('cMode').classList.add('alarm');
+  sirenOn(); vibOn();
+  startTs=Date.now();
+  timer=setInterval(()=>{tEl.textContent=new Date(Date.now()-startTs).toISOString().substr(11,8)},500);
+  if(voiceChk.checked) speakLoop();
+}
+function stopAlarm(){
+  if(!alarm) return;
+  alarm=false;
+  document.body.classList.remove('alarm');
+  toggle.textContent='▶ ATIVAR ALARME AGORA';
+  toggle.className='btn btn-on';
+  mEl.textContent='MODO ESPERA';
+  sub.textContent='MODO DE ESPERA • TOQUE EM ATIVAR';
+  document.getElementById('cTime').classList.remove('alarm');
+  document.getElementById('cMode').classList.remove('alarm');
+  sirenOff(); vibOff(); clearInterval(timer);
+  speechSynthesis.cancel();
+}
+
+toggle.addEventListener('click',()=> alarm?stopAlarm():startAlarm());
+enterBtn.addEventListener('click',()=>{
+  overlay.classList.add('hidden');
+  initCtx();
+  startAlarm();
+});
+document.getElementById('main').addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON' && e.target.tagName!=='INPUT' && !alarm){
+    // clique no fundo ativa
+    startAlarm();
+  }
+});
+
+// VOZ
+let speakInt=null;
+function speakLoop(){
+  if(!('speechSynthesis' in window)) {voiceSt.textContent='NÃO SUPORTADO';return;}
+  voiceSt.textContent='FALANDO...';
+  speechSynthesis.cancel();
+  const utter=()=>{
+    const msg=new SpeechSynthesisUtterance('Atenção! Jesus Cristo é o Senhor! Ele está voltando! Ainda há tempo!');
+    msg.lang='pt-BR'; msg.rate=0.95; msg.pitch=1.1; msg.volume=1;
+    speechSynthesis.speak(msg);
+  };
+  utter();
+  speakInt=setInterval(()=>{if(alarm) utter();},6500);
+}
+voiceChk.addEventListener('change',()=>{
+  speechSynthesis.cancel(); clearInterval(speakInt);
+  if(voiceChk.checked){
+    if(alarm) speakLoop();
+    voiceSt.textContent=alarm?'FALANDO...':'ATIVADA (FALA AO ATIVAR)';
+  }else{voiceSt.textContent='DESATIVADA'}
+});
+
+
+// FULLSCREEN
+document.getElementById('fsBtn').addEventListener('click',()=>{
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+});
+
+// WAKE LOCK
+document.getElementById('wakeBtn').addEventListener('click',async()=>{
+  try{
+    if('wakeLock' in navigator){
+      if(wakeLock){await wakeLock.release(); wakeLock=null; document.getElementById('wakeBtn').textContent='🔒 TRAVAR TELA LIGADA';}
+      else{wakeLock=await navigator.wakeLock.request('screen'); document.getElementById('wakeBtn').textContent='🔓 LIBERAR TELA';}
+    }else{alert('Wake Lock não suportado neste navegador');}
+  }catch(e){alert('Erro Wake Lock: '+e)}
+});
+
+// SHARE
+document.getElementById('shareBtn').addEventListener('click',async()=>{
+  const data={title:'ALERTA: JESUS ESTÁ VOLTANDO',text:'JESUS CRISTO É O SENHOR - ELE ESTÁ VOLTANDO - AINDA HÁ TEMPO - Alarme de Defesa Civil',url:location.href};
+  if(navigator.share){try{await navigator.share(data);}catch{}}
+  else{navigator.clipboard.writeText(location.href); alert('Link copiado!');}
+});
+
+// Auto resume se voltar
+document.addEventListener('visibilitychange',()=>{if(alarm && ctx && ctx.state==='suspended') ctx.resume();});
+</script>
+</body>
+</html>
