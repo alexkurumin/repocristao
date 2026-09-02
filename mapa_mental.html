@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Como Estudar a Bíblia - Mapa Mental Interativo</title>
+    <title>Como Estudar a Bíblia - Salmo 23</title>
     <style>
         :root {
             --bg-color: #f4f1ea;
@@ -13,450 +13,245 @@
             --border-color: #e0dacf;
             --primary-accent: #111827;
 
-            /* Cores dos Ramos */
-            --c1: #1e3a8a; /* Azul */
-            --c2: #14532d; /* Verde Escuro */
-            --c3: #c2410c; /* Laranja */
-            --c4: #581c87; /* Roxo */
-            --c5: #b91c1c; /* Vermelho */
-            --c6: #1d4ed8; /* Azul Vivo */
-            --c7: #0f766e; /* Teal */
-            --c8: #d97706; /* Amarelo/Dourado */
-            --c9: #6b21a8; /* Roxo Escuro */
-            --c10: #15803d; /* Verde */
+            --c1: #1e3a8a; --c2: #14532d; --c3: #c2410c; --c4: #581c87; --c5: #b91c1c;
+            --c6: #1d4ed8; --c7: #0f766e; --c8: #d97706; --c9: #6b21a8; --c10: #15803d;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding: 20px; padding-top: 80px; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
+        /* Topbar & Menu */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; background: #1e293b; color: #ffffff;
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;
+            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 10px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
+        .nav-logo { font-size: 1rem; font-weight: bold; color: #f59e0b; }
+        .hamburger-btn {
+            background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 5px 10px;
         }
-
-        header h1 {
-            font-size: 2.2rem;
-            color: var(--primary-accent);
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+        .nav-menu {
+            position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+            background-color: #0f172a; padding: 70px 20px 20px 20px;
+            display: flex; flex-direction: column; gap: 10px; transition: 0.3s;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3); overflow-y: auto; z-index: 1001;
         }
+        .nav-menu.open { right: 0; }
+        .nav-menu a { color: #e2e8f0; text-decoration: none; font-size: 0.9rem; padding: 8px; border-radius: 4px; }
+        .nav-menu a:hover { background: #334155; color: #f59e0b; }
 
-        header p.subtitle {
-            font-weight: 700;
-            color: #d97706;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
+        /* Header */
+        header { text-align: center; margin-bottom: 25px; padding: 20px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); }
+        header h1 { font-size: 1.8rem; color: var(--primary-accent); }
+        .scripture-box { margin-top: 10px; padding: 12px; background: #f8fafc; border-left: 4px solid #d97706; font-style: italic; font-size: 0.9rem; text-align: left; }
 
-        .main-quote {
-            margin-top: 15px;
-            font-style: italic;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        /* Grid de Cards */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; max-width: 1300px; margin: 0 auto; }
         .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            border-left: 6px solid var(--primary-accent);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: var(--card-bg); border-radius: 8px; padding: 20px; border-left: 6px solid var(--primary-accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s;
         }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .card-number { width: 30px; height: 30px; border-radius: 50%; color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px; }
+        .card-title { font-size: 1rem; font-weight: 700; display: inline; }
+        .click-hint { margin-top: 10px; font-size: 0.8rem; color: #d97706; font-weight: 600; }
 
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        .card-1 { border-color: var(--c1); } .card-1 .card-number { background: var(--c1); }
+        .card-2 { border-color: var(--c2); } .card-2 .card-number { background: var(--c2); }
+        .card-3 { border-color: var(--c3); } .card-3 .card-number { background: var(--c3); }
+        .card-4 { border-color: var(--c4); } .card-4 .card-number { background: var(--c4); }
+        .card-5 { border-color: var(--c5); } .card-5 .card-number { background: var(--c5); }
+        .card-6 { border-color: var(--c6); } .card-6 .card-number { background: var(--c6); }
+        .card-7 { border-color: var(--c7); } .card-7 .card-number { background: var(--c7); }
+        .card-8 { border-color: var(--c8); } .card-8 .card-number { background: var(--c8); }
+        .card-9 { border-color: var(--c9); } .card-9 .card-number { background: var(--c9); }
+        .card-10 { border-color: var(--c10); } .card-10 .card-number { background: var(--c10); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
+            display: none; justify-content: center; align-items: center; z-index: 2000; padding: 15px;
         }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 10px;
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #ffffff; width: 100%; max-width: 650px; max-height: 80vh; border-radius: 10px;
+            padding: 25px; overflow-y: auto; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
+        .close-btn { position: absolute; top: 15px; right: 15px; background: #eee; border: none; font-size: 1.2rem; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+        .modal-title { font-size: 1.2rem; margin-bottom: 15px; color: #1e293b; padding-right: 30px; }
+        .modal-item { margin-bottom: 15px; }
+        .modal-item-title { font-weight: bold; color: #0f172a; margin-bottom: 3px; display: block; }
+        .modal-item-desc { background: #f8fafc; padding: 8px 12px; border-radius: 5px; font-size: 0.9rem; color: #334155; border-left: 3px solid #cbd5e1; }
 
-        .card-number {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        li {
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        li::before {
-            content: "•";
-            font-weight: bold;
-            color: var(--text-muted);
-        }
-
-        /* Temas Individuais dos Cards */
-        .card-1 { border-color: var(--c1); } .card-1 .card-number { background: var(--c1); } .card-1 .card-title { color: var(--c1); }
-        .card-2 { border-color: var(--c2); } .card-2 .card-number { background: var(--c2); } .card-2 .card-title { color: var(--c2); }
-        .card-3 { border-color: var(--c3); } .card-3 .card-number { background: var(--c3); } .card-3 .card-title { color: var(--c3); }
-        .card-4 { border-color: var(--c4); } .card-4 .card-number { background: var(--c4); } .card-4 .card-title { color: var(--c4); }
-        .card-5 { border-color: var(--c5); } .card-5 .card-number { background: var(--c5); } .card-5 .card-title { color: var(--c5); }
-        .card-6 { border-color: var(--c6); } .card-6 .card-number { background: var(--c6); } .card-6 .card-title { color: var(--c6); }
-        .card-7 { border-color: var(--c7); } .card-7 .card-number { background: var(--c7); } .card-7 .card-title { color: var(--c7); }
-        .card-8 { border-color: var(--c8); } .card-8 .card-number { background: var(--c8); } .card-8 .card-title { color: var(--c8); }
-        .card-9 { border-color: var(--c9); } .card-9 .card-number { background: var(--c9); } .card-9 .card-title { color: var(--c9); }
-        .card-10 { border-color: var(--c10); } .card-10 .card-number { background: var(--c10); } .card-10 .card-title { color: var(--c10); }
-
-        /* Estilização da Linha da Redenção (Ramo 7) */
-        .redemption-flow {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            align-items: center;
-            justify-content: center;
-            margin: 15px 0;
-            background: #f8fafc;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-
-        .redemption-flow span {
-            color: var(--c7);
-        }
-
-        .redemption-flow .arrow {
-            color: #94a3b8;
-        }
-
-        /* Estilização da Doutrina da Graça (Ramo 8) */
-        .grace-box {
-            background: #fffbeeb3;
-            border: 1px dashed var(--c8);
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        .grace-box h4 {
-            color: var(--c8);
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
-        /* Footer / Resumo */
-        footer {
-            max-width: 1400px;
-            margin: 30px auto 0 auto;
-            background: #1e293b;
-            color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .footer-quote {
-            font-size: 1.1rem;
-            font-style: italic;
-            margin-bottom: 20px;
-            color: #e2e8f0;
-        }
-
-        .summary-flow {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            color: #f59e0b;
-            font-size: 0.95rem;
-        }
-
-        .summary-flow .step {
-            background: #334155;
-            padding: 5px 12px;
-            border-radius: 20px;
-            color: #ffffff;
-        }
-
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.6rem; }
-            .card-title { font-size: 1rem; }
-        }
+        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; z-index: 999; }
+        .overlay-bg.active { display: block; }
     </style>
 </head>
 <body>
 
+    <div class="navbar">
+        <div class="nav-logo">SOLI DEO GLORIA</div>
+        <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <div class="nav-menu" id="navMenu">
+        <a href="#" onclick="abrirModal(1)">1. O que o texto diz?</a>
+        <a href="#" onclick="abrirModal(2)">2. Qual é o contexto?</a>
+        <a href="#" onclick="abrirModal(3)">3. O que o texto significa?</a>
+        <a href="#" onclick="abrirModal(4)">4. Revelação de Deus</a>
+        <a href="#" onclick="abrirModal(5)">5. Revelação do Homem</a>
+        <a href="#" onclick="abrirModal(6)">6. Relação com Cristo</a>
+        <a href="#" onclick="abrirModal(7)">7. Encaixe na Redenção</a>
+        <a href="#" onclick="abrirModal(8)">8. Doutrina Reformada</a>
+        <a href="#" onclick="abrirModal(9)">9. Bíblia Interpreta a Bíblia</a>
+        <a href="#" onclick="abrirModal(10)">10. Aplicação Prática</a>
+    </div>
+
+    <div class="overlay-bg" id="overlayBg" onclick="fecharMenu()"></div>
+
     <header>
-        <p class="subtitle">SOLI DEO GLORIA</p>
+        <p style="font-weight: 700; color: #d97706; font-size: 0.8rem; letter-spacing: 1px;">ESTUDO COMPLETO</p>
         <h1>COMO ESTUDAR A BÍBLIA</h1>
-        <p class="main-quote">
-            "Toda Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção, para a instrução na justiça, para que o homem de Deus seja apto e plenamente preparado para toda boa obra." <br>
-            <strong>2Tm 3.16-17</strong>
-        </p>
+        <div class="scripture-box">
+            <strong>Salmo 23:1-6:</strong> "O Senhor é o meu pastor; nada me faltará. Deita-me em verdes pastos, guia-me suavemente a águas tranquilas. Refrigera a minha alma; guia-me pelas veredas da justiça, por amor do seu nome..."
+        </div>
     </header>
 
     <main class="grid-container">
-
-        <article class="card card-1">
-            <div class="card-header">
-                <div class="card-number">1</div>
-                <h2 class="card-title">O que o texto diz?</h2>
-            </div>
-            <ul>
-                <li>Leia várias vezes</li>
-                <li>Observe palavras repetidas</li>
-                <li>Identifique personagens</li>
-                <li>Identifique ações e acontecimentos</li>
-                <li>Observe contrastes e comparações</li>
-                <li>Pergunte: Quem? O quê? Quando? Onde? Por quê?</li>
-            </ul>
-        </article>
-
-        <article class="card card-2">
-            <div class="card-header">
-                <div class="card-number">2</div>
-                <h2 class="card-title">Qual é o contexto?</h2>
-            </div>
-            <ul>
-                <li><strong>Contexto imediato:</strong> versículos anteriores e posteriores</li>
-                <li><strong>Contexto do livro:</strong> propósito e tema</li>
-                <li><strong>Contexto histórico:</strong> época, acontecimentos, costumes</li>
-                <li><strong>Contexto literário:</strong> narrativa, poesia, profecia, epístola etc.</li>
-                <li><strong>Contexto canônico:</strong> relação com o restante das Escrituras</li>
-            </ul>
-        </article>
-
-        <article class="card card-3">
-            <div class="card-header">
-                <div class="card-number">3</div>
-                <h2 class="card-title">O que o texto significa?</h2>
-            </div>
-            <ul>
-                <li>Qual era a intenção do autor?</li>
-                <li>O que significava para os primeiros leitores?</li>
-                <li>Qual é a ideia principal?</li>
-                <li>Existe uma promessa?</li>
-                <li>Existe um mandamento?</li>
-                <li>Existe uma advertência?</li>
-                <li>Existe um pecado sendo exposto?</li>
-                <li>Existe uma verdade sobre Deus?</li>
-            </ul>
-        </article>
-
-        <article class="card card-4">
-            <div class="card-header">
-                <div class="card-number">4</div>
-                <h2 class="card-title">O que o texto revela sobre Deus?</h2>
-            </div>
-            <ul>
-                <li>Soberania</li>
-                <li>Santidade</li>
-                <li>Justiça</li>
-                <li>Misericórdia</li>
-                <li>Graça</li>
-                <li>Fidelidade</li>
-                <li>Ira contra o pecado</li>
-                <li>Amor</li>
-                <li>Providência</li>
-            </ul>
-        </article>
-
-        <article class="card card-5">
-            <div class="card-header">
-                <div class="card-number">5</div>
-                <h2 class="card-title">O que o texto revela sobre o homem?</h2>
-            </div>
-            <ul>
-                <li>Criação à imagem de Deus</li>
-                <li>Queda</li>
-                <li>Pecado</li>
-                <li>Incapacidade espiritual</li>
-                <li>Necessidade de graça</li>
-                <li>Necessidade de redenção</li>
-                <li>Responsabilidade diante de Deus</li>
-            </ul>
-        </article>
-
-        <article class="card card-6">
-            <div class="card-header">
-                <div class="card-number">6</div>
-                <h2 class="card-title">Como o texto se relaciona com Cristo?</h2>
-            </div>
-            <ul>
-                <li>Promessa de Cristo</li>
-                <li>Necessidade de Cristo</li>
-                <li>Profecia sobre Cristo</li>
-                <li>Tipologia</li>
-                <li>Obra de Cristo</li>
-                <li>Vida perfeita de Cristo</li>
-                <li>Morte substitutiva</li>
-                <li>Ressurreição</li>
-                <li>Ascensão</li>
-                <li>Reino de Cristo</li>
-                <li>Segunda vinda</li>
-            </ul>
-        </article>
-
-        <article class="card card-7">
-            <div class="card-header">
-                <div class="card-number">7</div>
-                <h2 class="card-title">Como o texto se encaixa na redenção?</h2>
-            </div>
-            <div class="redemption-flow">
-                <span>CRIAÇÃO</span> <span class="arrow">➔</span>
-                <span>QUEDA</span> <span class="arrow">➔</span>
-                <span>PROMESSA</span> <span class="arrow">➔</span>
-                <span>REDENÇÃO</span> <span class="arrow">➔</span>
-                <span>IGREJA</span> <span class="arrow">➔</span>
-                <span>CONSUMAÇÃO</span>
-            </div>
-            <p style="font-size: 0.9rem; text-align: center; color: var(--text-muted); font-style: italic;">
-                Pergunta: Onde estou na história da redenção?
-            </p>
-        </article>
-
-        <article class="card card-8">
-            <div class="card-header">
-                <div class="card-number">8</div>
-                <h2 class="card-title">O que a doutrina reformada nos ajuda a enxergar?</h2>
-            </div>
-            <ul>
-                <li><strong>Sola Scriptura</strong> - somente a Escritura</li>
-                <li><strong>Sola Gratia</strong> - somente pela graça</li>
-                <li><strong>Sola Fide</strong> - somente pela fé</li>
-                <li><strong>Solus Christus</strong> - somente Cristo</li>
-                <li><strong>Soli Deo Gloria</strong> - glória somente a Deus</li>
-            </ul>
-            <div class="grace-box">
-                <h4>DOUTRINA DA GRAÇA</h4>
-                <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted);">
-                    Depravação humana ➔ Eleição ➔ Expiação ➔ Chamado eficaz ➔ Perseverança dos santos
-                </p>
-            </div>
-        </article>
-
-        <article class="card card-9">
-            <div class="card-header">
-                <div class="card-number">9</div>
-                <h2 class="card-title">Como a Bíblia interpreta a Bíblia?</h2>
-            </div>
-            <ul>
-                <li>Compare textos semelhantes</li>
-                <li>Procure passagens paralelas</li>
-                <li>Considere o ensino geral das Escrituras</li>
-                <li>Textos claros ajudam na compreensão dos mais difíceis</li>
-                <li>Não construa uma doutrina sobre um versículo isolado</li>
-            </ul>
-        </article>
-
-        <article class="card card-10">
-            <div class="card-header">
-                <div class="card-number">10</div>
-                <h2 class="card-title">Como isso se aplica à minha vida?</h2>
-            </div>
-            <ul>
-                <li>O que devo crer?</li>
-                <li>O que devo abandonar?</li>
-                <li>O que devo obedecer?</li>
-                <li>O que devo esperar?</li>
-                <li>O que devo temer?</li>
-                <li>Pelo que devo orar?</li>
-                <li>Como isso me conduz a Cristo?</li>
-                <li>Como isso deve produzir santidade e gratidão?</li>
-            </ul>
-        </article>
-
+        <div class="card card-1" onclick="abrirModal(1)"><span class="card-number">1</span><h2 class="card-title">O que o texto diz?</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-2" onclick="abrirModal(2)"><span class="card-number">2</span><h2 class="card-title">Qual é o contexto?</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-3" onclick="abrirModal(3)"><span class="card-number">3</span><h2 class="card-title">O que o texto significa?</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-4" onclick="abrirModal(4)"><span class="card-number">4</span><h2 class="card-title">Revelação de Deus</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-5" onclick="abrirModal(5)"><span class="card-number">5</span><h2 class="card-title">Revelação do Homem</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-6" onclick="abrirModal(6)"><span class="card-number">6</span><h2 class="card-title">Relação com Cristo</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-7" onclick="abrirModal(7)"><span class="card-number">7</span><h2 class="card-title">Encaixe na Redenção</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-8" onclick="abrirModal(8)"><span class="card-number">8</span><h2 class="card-title">Doutrina Reformada</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-9" onclick="abrirModal(9)"><span class="card-number">9</span><h2 class="card-title">Bíblia Interpreta a Bíblia</h2><div class="click-hint">👉 Clique para abrir</div></div>
+        <div class="card card-10" onclick="abrirModal(10)"><span class="card-number">10</span><h2 class="card-title">Aplicação Prática</h2><div class="click-hint">👉 Clique para abrir</div></div>
     </main>
 
-    <footer>
-        <p class="footer-quote">
-            "O que este texto ensina sobre Deus e sua obra em Cristo, e como isso deve transformar minha fé e minha vida?"
-        </p>
-        <div class="summary-flow">
-            <span class="step">TEXTO</span> ➔
-            <span class="step">CONTEXTO</span> ➔
-            <span class="step">SIGNIFICADO</span> ➔
-            <span class="step">DEUS</span> ➔
-            <span class="step">HOMEM</span> ➔
-            <span class="step">CRISTO</span> ➔
-            <span class="step">REDENÇÃO</span> ➔
-            <span class="step">DOUTRINA</span> ➔
-            <span class="step">APLICAÇÃO</span> ➔
-            <span class="step">GLÓRIA DE DEUS</span>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <button class="close-btn" onclick="fecharModal()">✕</button>
+            <h3 class="modal-title" id="modalTitle">Título</h3>
+            <div id="modalContent">Conteúdo</div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Efeito visual ao clicar nos cards (destaque suave)
-            const cards = document.querySelectorAll('.card');
+        const dadosEstudo = {
+            1: {
+                title: "1. O que o texto diz? (Observação)",
+                items: [
+                    { t: "Palavras Chave", d: "Repetição de 'meu pastor', 'guiar', 'refrigerar', 'comigo'." },
+                    { t: "Personagens", d: "O SENHOR (Pastor/Anfitrião), o Salmista (Ovelha/Hóspede) e os Inimigos." },
+                    { t: "Ações do Pastor", d: "Apascenta, conduz para águas de descanso, restaura a alma, unge a cabeça e prepara a mesa." }
+                ]
+            },
+            2: {
+                title: "2. Qual é o contexto? (Análise)",
+                items: [
+                    { t: "Autor e Época", d: "Escrito por Davi, que conhecia na prática a rotina e os perigos de um pastor de ovelhas." },
+                    { t: "Posição Canônica", d: "Fica entre o Salmo 22 (A morte do Pastor na cruz) e o Salmo 24 (O Rei Glorioso)." },
+                    { t: "Costumes Culturais", d: "Cajado para orientar, vara para defender contra feras; óleo na cabeça como gesto de acolhimento e honra." }
+                ]
+            },
+            3: {
+                title: "3. O que o texto significa? (Interpretação)",
+                items: [
+                    { t: "'Nada me faltará'", d: "Não é prosperidade material irrestrita, mas suficiência completa do cuidado de Deus." },
+                    { t: "'Vale da Sombra da Morte'", d: "Representa vales escuros, períodos de luto, depressão e grandes perigos." },
+                    { t: "'Bondade e Misericórdia me seguirão'", d: "A graça de Deus literalmente 'persegue' o crente todos os dias." }
+                ]
+            },
+            4: {
+                title: "4. Revelação de Deus (Teologia)",
+                items: [
+                    { t: "Providência e Cuidado", d: "Deus provê sustento físico, espiritual e paz interna." },
+                    { t: "Fidelidade", d: "Ele guia o Seu povo 'por amor do seu nome', mantendo Sua palavra." },
+                    { t: "Presença", d: "Ele não nos livra de passar pelo vale, mas passa junto conosco." }
+                ]
+            },
+            5: {
+                title: "5. Revelação do Homem (Antropologia)",
+                items: [
+                    { t: "Fragilidade", d: "O homem é dependente como uma ovelha: indefeso e propenso a se perder." },
+                    { t: "Necessidade de Restauração", d: "Nossa alma constantemente precisa ser 'refrigerada' por Deus." }
+                ]
+            },
+            6: {
+                title: "6. Relação com Cristo (Cristocêntrico)",
+                items: [
+                    { t: "O Bom Pastor", d: "Jesus em João 10:11 declara: 'Eu sou o bom pastor que dá a vida pelas ovelhas'." },
+                    { t: "A Grande Ceia", d: "A mesa preparada na presença dos inimigos aponta para o banquete eterno da salvação." }
+                ]
+            },
+            7: {
+                title: "7. Encaixe na Redenção (História Bíblica)",
+                items: [
+                    { t: "Da Queda à Consumação", d: "Perdidos no pecado, somos resgatados pelo Pastor e levados para a Casa do Senhor eternamente." }
+                ]
+            },
+            8: {
+                title: "8. Doutrina Reformada",
+                items: [
+                    { t: "Sola Gratia", d: "O Pastor nos busca sem que tenhamos merecimento algum." },
+                    { t: "Perseverança dos Santos", d: "Nada nos faltará até a chegada na Casa do Senhor." }
+                ]
+            },
+            9: {
+                title: "9. Bíblia Interpreta a Bíblia",
+                items: [
+                    { t: "Ezequiel 34", d: "Deus promete resgatar Suas ovelhas dos maus pastores." },
+                    { t: "Apocalipse 7:17", d: "O Cordeiro nos guiará às fontes das águas da vida." }
+                ]
+            },
+            10: {
+                title: "10. Aplicação Prática",
+                items: [
+                    { t: "O que crer?", d: "Que Deus governa meu presente e futuro com amor." },
+                    { t: "O que abandonar?", d: "A ansiedade e a tentativa de guiar minha vida sozinho." },
+                    { t: "Como orar?", d: "Agradecendo pelo cuidado e pedindo direção nas decisões." }
+                ]
+            }
+        };
 
-            cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    cards.forEach(c => c.style.opacity = '0.6');
-                    card.style.opacity = '1';
-                });
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const bg = document.getElementById('overlayBg');
+            menu.classList.toggle('open');
+            bg.classList.toggle('active');
+        }
+
+        function fecharMenu() {
+            document.getElementById('navMenu').classList.remove('open');
+            document.getElementById('overlayBg').classList.remove('active');
+        }
+
+        function abrirModal(id) {
+            fecharMenu();
+            const dados = dadosEstudo[id];
+            if (!dados) return;
+
+            document.getElementById('modalTitle').innerText = dados.title;
+            
+            let html = '';
+            dados.items.forEach(item => {
+                html += `
+                    <div class="modal-item">
+                        <span class="modal-item-title">• ${item.t}</span>
+                        <div class="modal-item-desc">${item.d}</div>
+                    </div>
+                `;
             });
 
-            // Reseta a opacidade ao clicar fora dos cards
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.card')) {
-                    cards.forEach(c => c.style.opacity = '1');
-                }
-            });
-        });
+            document.getElementById('modalContent').innerHTML = html;
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
     </script>
 </body>
 </html>
